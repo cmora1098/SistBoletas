@@ -1,0 +1,142 @@
+﻿.brand-login {
+    max-width: 150px;
+    margin: 0 auto;
+    display: block;
+}
+
+
+.parsley-error {
+    border-color:red;
+}
+
+.parsley-errors-list {
+    font-size: 0.8rem;
+    color: red;
+}
+
+.btn-default {
+    background: #00a69a;
+    border-color: #00a69a;
+    color: #fff;
+}
+
+.btn-default:hover,
+.btn-default:focus,
+.btn-default:active {
+    background: #00554c;
+    border-color: #00554c;
+    color: #fff;
+}
+
+.modal-content iframe {
+    width: 100%;
+    display: block;
+}
+
+
+.hk-wrapper .hk-navbar.navbar-dark {
+    background: #005b51;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255,255,255,0.8);
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: rgba(255,255,255,1);
+}
+
+.hk-sec-wrapper {
+    box-shadow: 1px 2px 7px #bbb;
+}
+
+.brand-img {
+    max-width: 170px;
+}
+
+.navbar-light .brand-light,
+.navbar-dark .brand-dark {
+    display: none !important;
+}
+
+.navbar-brand {
+    padding: 1px 0 10px 0;
+}
+
+
+.hk-pg-wrapper {
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.navbar-brand .brand-img {
+    max-width: 140px;
+}
+
+.spinner-waiting  {
+    display: block;
+    text-align: center;
+    color: #005b51;
+}
+
+table.dataTable thead th, 
+table.dataTable thead td, 
+table.dataTable tbody th, 
+table.dataTable tbody td {
+    padding: .3rem 0.3rem;
+}
+
+.table-boleta .btn.btn-icon.btn-icon-style-3 {
+    margin: 3px;
+}
+
+.jq-toast-wrap .jq-toast-single.jq-toast-danger {
+    color: #f50000;
+    border-color: rgba(255, 0, 0, 0.9);
+}
+
+.jq-toast-wrap .jq-toast-single.jq-toast-danger {
+    color: #f50000;
+    border-color: rgba(255, 0, 0, 0.9);
+}
+
+.jq-toast-wrap .jq-toast-single.jq-toast-success {
+    color: #090;
+    border-color: rgba(0, 157, 40, 0.3);
+}
+
+.jq-toast-wrap .jq-toast-single.jq-has-icon .jq-toast-icon {
+    font-size: 25px;
+}
+
+body #cometchat {
+    padding: 0 !important;
+}
+
+.btn-green, .btn-success {
+    background-color: #00aa93;
+    border-color: #00aa93;
+}
+
+.btn-green:hover, .btn-success:hover {
+    background-color: #005b51;
+    border-color: #005b51;
+}
+
+.button-list {
+    min-width: 100px;
+}
+
+#datable_1_filter {
+    max-width: 350px;
+}
+
+#datable_1_filter label {
+    display: flex;
+    align-content: center;
+    align-items: center;
+}
+
+#datable_1_filter .form-control {
+   margin-left: 20px;
+}

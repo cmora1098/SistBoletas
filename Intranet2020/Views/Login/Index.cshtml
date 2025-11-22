@@ -1,0 +1,163 @@
+﻿
+@{
+    Layout = null;
+    ViewBag.Title = "Accesando a la Intranet";
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>@ViewBag.Title</title>
+    <meta name="description" content="Intranet del Programa de Desarrollo Productivo Agrario Rural - AGRO RURAL" />
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Morris Charts CSS -->
+    @Styles.Render("~/Content/vendors/morris.js/morris.css")
+
+
+    <!-- Toggles CSS -->
+    @Styles.Render("~/Content/vendors/jquery-toggles/css/toggles.css")
+    @Styles.Render("~/Content/vendors/jquery-toggles/css/themes/toggles-light.css")
+
+    <!-- Toastr CSS -->
+    @Styles.Render("~/Content/vendors/jquery-toast-plugin/dist/jquery.toast.min.css")
+
+    <!-- Theme CSS -->
+    @Styles.Render("~/Content/dist/css/style.css")
+
+
+    <!-- Custom CSS -->
+    @Styles.Render("~/Content/Main.css")
+
+
+</head>
+
+<body>
+    <input type="hidden" id="urlWebApi" value="@System.Configuration.ConfigurationManager.AppSettings["urlWebApi"]" />
+    <input type="hidden" id="urlMvc" value="@System.Configuration.ConfigurationManager.AppSettings["urlMvc"]" />
+
+
+    <!-- HK Wrapper -->
+    <div class="hk-wrapper">
+
+        <!-- Main Content -->
+        <div class="hk-pg-wrapper hk-auth-wrapper">
+            <header class="d-flex justify-content-between align-items-center">
+
+                <a class="d-flex auth-brand align-items-center" href="#">
+                    <img class="brand-img d-inline-block mr-5 img-fluid" src="@Url.Content("~/Content/images/agronet_blanco.png")" alt="Agro Rural" />
+                </a>
+                <div class="btn-group btn-group-sm">
+                    <a href="#" class="btn btn-outline-secondary">Soporte Tecnico</a>
+                    <a href="#" class="btn btn-outline-secondary">Nosotros</a>
+                </div>
+            </header>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-5 pa-0">
+                        <div id="owl_demo_1" class="owl-carousel dots-on-item owl-theme">
+                            <div class="fadeOut item auth-cover-img overlay-wrap" style="background-image:url(@Url.Content("~/Content/images/bg1.jpg"));">
+                                <div class="auth-cover-info py-xl-0 pt-100 pb-50">
+                                    <div class="auth-cover-content text-center w-xxl-75 w-sm-90 w-xs-100">
+                                        <h1 class="display-3 text-white mb-20">Acciones para recuperación de pastos naturales.</h1>
+                                        <p class="text-white">A través de Agro Rural se fortalecen las capacidades en las familias productoras de zonas rurales sobre las ventajas y desventajas en los sistemas de pastoreo.</p>
+                                    </div>
+                                </div>
+                                <div class="bg-overlay bg-trans-dark-50"></div>
+                            </div>
+                            <div class="fadeOut item auth-cover-img overlay-wrap" style="background-image:url(@Url.Content("~/Content/images/bg2.jpg"));">
+                                <div class="auth-cover-info py-xl-0 pt-100 pb-50">
+                                    <div class="auth-cover-content text-center w-xxl-75 w-sm-90 w-xs-100">
+                                        <h1 class="display-3 text-white mb-20">Construcción de cobertizos en zonas altoandinas.</h1>
+                                        <p class="text-white">A través de Agro Rural se viene trabajando de manera articulada en 10 departamentos, 33 provincias y 76 distritos a fin de proteger a las alpacas y ovinos de las bajas temperaturas, pertenecientes a las familias campesinas que habitan en las zonas vulnerables.</p>
+                                    </div>
+                                </div>
+                                <div class="bg-overlay bg-trans-dark-50"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-7 pa-0">
+                        <div class="auth-form-wrap py-xl-0 py-50">
+                            <div class="auth-form w-xxl-55 w-xl-75 w-sm-90 w-xs-100">
+                                <h1 class="display-4 mb-10">¡Bienvenido!</h1>
+                                <p class="mb-4">Ingresa a la intranet del Programa de Desarrollo Productivo Agrario Rural - AGRO RURAL.</p>
+                                <form id="form-singup" data-parsley-validate>
+                                    <div class="form-group">
+                                        <input class="form-control" name="vUsuario" id="vUsuario" placeholder="Usuario" type="text" data-parsley-required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="Contraseña" type="password" id="vContrasena" name="vContrasena" data-parsley-required>
+
+                                    </div>
+                                    <button id="btn-form-singup" class="btn btn-default btn-block" type="submit">Ingresar</button>
+                                    <span id="js-spinner" class="spinner-waiting"></span>
+                                </form>
+                                <p class="font-14 text-center mt-15">¿Olvidaste tu contraseña? Haz click <a href="#">aquí</a></p>
+                                <div class="option-sep">&nbsp;</div>
+
+                                <p class="text-center mb-4">Desarrollado por la Unidad de  Tecnologías de la nformación 2020.</p>
+                                <a class="brand-login mb-20" href="#">
+                                    <img class="img-fluid" src="@Url.Content("~/Content/images/logo.png")" alt="Agro Rural" />
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Main Content -->
+
+    </div>
+    <!-- /HK Wrapper -->
+
+
+    @Scripts.Render("~/Content/vendors/jquery/dist/jquery.min.js")
+
+    <!-- Bootstrap Core JavaScript -->
+    @Scripts.Render("~/Content/vendors/popper.js/dist/umd/popper.min.js")
+    @Scripts.Render("~/Content/vendors/bootstrap/dist/js/bootstrap.min.js")
+
+    <!-- Slimscroll JavaScript -->
+    @Scripts.Render("~/Content/dist/js/jquery.slimscroll.js")
+
+
+    <!-- jQuery Redirec -->
+    @Scripts.Render("~/Content/vendors/jquery.redirect-master/jquery.redirect.js")
+
+
+
+    <!-- Fancy Dropdown JS -->
+    @Scripts.Render("~/Content/dist/js/dropdown-bootstrap-extended.js")
+
+
+    <!-- Owl JavaScript -->
+    @Scripts.Render("~/Content/vendors/owl.carousel/dist/owl.carousel.min.js")
+
+
+    <!-- FeatherIcons JavaScript -->
+    @Scripts.Render("~/Content/dist/js/feather.min.js")
+
+    <!-- Parsley JS -->
+    @Scripts.Render("~/Scripts/Vendor/ParsleyJS/parsley.min.js")
+    @Scripts.Render("~/Scripts/Vendor/ParsleyJS/i18n/es.js")
+
+    <!-- Init JavaScript -->
+    @Scripts.Render("~/Content/dist/js/init.js")
+    @Scripts.Render("~/Content/dist/js/login-data.js")
+
+    <!-- Custom JavaScript -->
+    <script src="~/Scripts/Helpers/Util.js?noCache=@Guid.NewGuid().ToString()"></script>
+    <script src="~/Scripts/Login/Login.js?noCache=@Guid.NewGuid().ToString()"></script>
+
+</body>
+
+</html>
+

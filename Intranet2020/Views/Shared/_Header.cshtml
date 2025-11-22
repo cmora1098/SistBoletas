@@ -1,0 +1,196 @@
+﻿<!-- Top Navbar -->
+<nav class="navbar navbar-expand-xl navbar-dark fixed-top hk-navbar hk-navbar-alt">
+    <a class="navbar-toggle-btn nav-link-hover navbar-toggler" href="javascript:void(0);" data-toggle="collapse" data-target="#navbarCollapseAlt" aria-controls="navbarCollapseAlt" aria-expanded="false" aria-label="Toggle navigation"><span class="feather-icon"><i data-feather="menu"></i></span></a>
+    <a class="navbar-brand" href="@Url.Action("Index", "Home")">
+        <img class="brand-light brand-img d-inline-block mr-20" src="@Url.Content("~/Content/images/agronet_blanco.png")" alt="brand" />
+        <img class="brand-dark brand-img d-inline-block mr-20" src="@Url.Content("~/Content/images/agronet_color.png")" alt="brand" />
+        <span class="sr-only">AGRONET</span>
+    </a>
+    <div class="collapse navbar-collapse" id="navbarCollapseAlt">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Index", "Boletas")">
+                    <span class="nav-link-text">Boletas</span>
+                </a>
+            </li>
+            @*<li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Contact", "Home")">
+                    <span class="nav-link-text">Contacto</span>
+                </a>
+            </li>*@
+
+
+
+        </ul>
+        <form class="navbar-search-alt">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="ion ion-ios-search"></i></span>
+                </div>
+                <input class="form-control" type="search" placeholder="Buscar" aria-label="Search">
+            </div>
+        </form>
+    </div>
+    <ul class="navbar-nav hk-navbar-content">
+        <li class="nav-item">
+            <a id="settings_toggle_btn" class="nav-link nav-link-hover" href="javascript:void(0);"><i class="ion ion-ios-settings"></i></a>
+        </li>
+        <li class="nav-item dropdown dropdown-notifications">
+            <a class="nav-link dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ion ion-ios-notifications"></i><span class="badge-wrap"><span class="badge badge-primary badge-indicator badge-indicator-sm badge-pill pulse"></span></span></a>
+            <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                <h6 class="dropdown-header">Notifications <a href="javascript:void(0);" class="">View all</a></h6>
+                <div class="notifications-nicescroll-bar">
+                    <a href="javascript:void(0);" class="dropdown-item">
+                        <div class="media">
+                            <div class="media-img-wrap">
+                                <div class="avatar avatar-sm">
+                                    <img class="avatar-img rounded-circle img-fluid" src="@Url.Content("~/Content/images/avatar10.jpg")" alt="user" />
+                                </div>
+                            </div>
+                            <div class="media-body">
+                                <div>
+                                    <div class="notifications-text"><span class="text-dark text-capitalize">Evie Ono</span> accepted your invitation to join the team</div>
+                                    <div class="notifications-time">12m</div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="javascript:void(0);" class="dropdown-item">
+                        <div class="media">
+                            <div class="media-img-wrap">
+                                <div class="avatar avatar-sm">
+                                    <img src="@Url.Content("~/Content/images/avatar10.jpg")" alt="user" class="avatar-img rounded-circle">
+                                </div>
+                            </div>
+                            <div class="media-body">
+                                <div>
+                                    <div class="notifications-text">New message received from <span class="text-dark text-capitalize">Misuko Heid</span></div>
+                                    <div class="notifications-time">1h</div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="javascript:void(0);" class="dropdown-item">
+                        <div class="media">
+                            <div class="media-img-wrap">
+                                <div class="avatar avatar-sm">
+                                    <span class="avatar-text avatar-text-primary rounded-circle">
+                                        <span class="initial-wrap"><span><i class="zmdi zmdi-account font-18"></i></span></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="media-body">
+                                <div>
+                                    <div class="notifications-text">You have a follow up with<span class="text-dark text-capitalize"> Deepor head</span> on <span class="text-dark text-capitalize">friday, dec 19</span> at <span class="text-dark">10.00 am</span></div>
+                                    <div class="notifications-time">2d</div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="javascript:void(0);" class="dropdown-item">
+                        <div class="media">
+                            <div class="media-img-wrap">
+                                <div class="avatar avatar-sm">
+                                    <span class="avatar-text avatar-text-success rounded-circle">
+                                        <span class="initial-wrap"><span>A</span></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="media-body">
+                                <div>
+                                    <div class="notifications-text">Application of <span class="text-dark text-capitalize">Sarah Williams</span> is waiting for your approval</div>
+                                    <div class="notifications-time">1w</div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="javascript:void(0);" class="dropdown-item">
+                        <div class="media">
+                            <div class="media-img-wrap">
+                                <div class="avatar avatar-sm">
+                                    <span class="avatar-text avatar-text-warning rounded-circle">
+                                        <span class="initial-wrap"><span><i class="zmdi zmdi-notifications font-18"></i></span></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="media-body">
+                                <div>
+                                    <div class="notifications-text">Last 2 days left for the project</div>
+                                    <div class="notifications-time">15d</div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </li>
+        <li class="nav-item dropdown dropdown-authentication">
+            <a class="nav-link dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="media">
+                    <div class="media-img-wrap">
+                        <div class="avatar">
+                            <img src="@Url.Content("~/Content/images/avatar.png")" alt="user" class="avatar-img rounded-circle">
+                        </div>
+                        <span class="badge badge-success badge-indicator"></span>
+                    </div>
+                    <div class="media-body">
+                        <span id="user_name"> &nbsp;<i class="zmdi zmdi-chevron-down"></i></span>
+                    </div>
+                </div>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="flipInX" data-dropdown-out="flipOutX">
+                <a class="dropdown-item" href="profile.html"><i class="dropdown-icon zmdi zmdi-account"></i><span>Mi Perfil</span></a>
+                <a class="dropdown-item" href="#"><i class="dropdown-icon zmdi zmdi-card"></i><span>Mi Balance</span></a>
+                <a class="dropdown-item" href="inbox.html"><i class="dropdown-icon zmdi zmdi-email"></i><span>Bandeja</span></a>
+                <a class="dropdown-item" href="#"><i class="dropdown-icon zmdi zmdi-settings"></i><span>Configuraciones</span></a>
+                <div class="dropdown-divider"></div>
+                <div class="sub-dropdown-menu show-on-hover">
+                    <a href="#" class="dropdown-toggle dropdown-item no-caret"><i class="zmdi zmdi-check text-success"></i>Online</a>
+                    <div class="dropdown-menu open-left-side">
+                        <a class="dropdown-item" href="#"><i class="dropdown-icon zmdi zmdi-check text-success"></i><span>Online</span></a>
+                        <a class="dropdown-item" href="#"><i class="dropdown-icon zmdi zmdi-circle-o text-warning"></i><span>Ocupado</span></a>
+                        <a class="dropdown-item" href="#"><i class="dropdown-icon zmdi zmdi-minus-circle-outline text-danger"></i><span>Offline</span></a>
+                    </div>
+                </div>
+                <div class="dropdown-divider"></div>
+                <a id="btn-logout" class="dropdown-item" href="#"><i class="dropdown-icon zmdi zmdi-power"></i><span>Salir</span></a>
+            </div>
+        </li>
+    </ul>
+</nav>
+<!-- /Top Navbar -->
+<!-- Setting Panel -->
+<div class="hk-settings-panel">
+    <div class="nicescroll-bar position-relative">
+        <div class="settings-panel-wrap">
+            <div class="settings-panel-head mb-15">
+                <a href="javascript:void(0);" id="settings_panel_close" class="settings-panel-close"><span class="feather-icon"><i data-feather="x"></i></span></a>
+            </div>
+
+
+            <hr>
+            <h6 class="mb-5">Navegación</h6>
+            <p class="font-14">Elige el modo de color que te gusta</p>
+            <div class="button-list hk-navbar-select mb-10">
+                <button type="button" id="navtop_light_select" class="btn btn-outline-light btn-sm btn-wth-icon icon-wthot-bg"><span class="icon-label"><i class="fa fa-sun-o"></i> </span><span class="btn-text">Claro</span></button>
+                <button type="button" id="navtop_dark_select" class="btn btn-outline-primary btn-sm btn-wth-icon icon-wthot-bg"><span class="icon-label"><i class="fa fa-moon-o"></i> </span><span class="btn-text">Oscuro</span></button>
+            </div>
+            <hr>
+            <div class="d-flex justify-content-between align-items-center">
+                <h6>Navegación desplazable</h6>
+                <div class="toggle toggle-sm toggle-simple toggle-light toggle-bg-primary scroll-nav-switch"></div>
+            </div>
+            <button id="reset_settings" class="btn btn-primary btn-block btn-reset mt-30">Resetear</button>
+        </div>
+    </div>
+    <img class="d-none" src="dist/img/logo-light.png" alt="brand" />
+    <img class="d-none" src="dist/img/logo-dark.png" alt="brand" />
+</div>
+<!-- /Setting Panel -->
+
+
+

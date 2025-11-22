@@ -1,0 +1,250 @@
+﻿
+@{
+    ViewBag.Title = "Boletas";
+}
+
+@section scripts {
+
+    <!-- Plugins JavaScript -->
+    <script src="~/Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/vendors/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Content/vendors/datatables.net-dt/js/dataTables.dataTables.min.js"></script>
+    <script src="~/Content/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/Content/vendors/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/Content/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/Content/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/Content/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/Content/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/Content/vendors/jquery-toast-plugin/dist/jquery.toast.min.js"></script>
+
+    <!-- Parsley JS -->
+    @Scripts.Render("~/Scripts/Vendor/ParsleyJS/parsley.min.js")
+    @Scripts.Render("~/Scripts/Vendor/ParsleyJS/i18n/es.js")
+
+    <!-- Custom js -->
+    <script type="text/javascript" src="~/Scripts/Boletas/Boleta.js?noCache=@Guid.NewGuid().ToString()"></script>
+
+}
+
+
+<div class="container-fluid">
+
+    <!-- Title -->
+    <div class="hk-pg-header">
+        <h4 class="hk-pg-title"><span class="pg-title-icon"><span class="feather-icon"><i data-feather="database"></i></span></span>Boletas</h4>
+    </div>
+    <!-- /Title -->
+    <!-- Row -->
+    <div class="row">
+        <div class="col-xl-12">
+            <section class="hk-sec-wrapper">
+                <h5 class="hk-sec-title mb-20">Listado de Boletas</h5>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="table-wrap">
+
+                            <div id="container_admin" style="display:none;">
+                                <div class="row mb-3">
+                                    <div class="col-md-3">
+                                        <label for="vTipoBoleta">Tipos de Boleta</label>
+                                        <select id="vTipoBoleta" class="form-control custom-select js-select">
+                                            @*<option disabled="disabled">Tipos de Boleta</option>*@
+                                            <option value="R">R</option>
+                                            <option value="G">G</option>
+                                            <option value="" selected>Todos</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="bVisto">Vieron la boleta</label>
+
+                                        <select id="bVisto" class="form-control custom-select js-select">
+                                            @*<option disabled="disabled">Vieron la boleta</option>*@
+                                            <option value="1">Si</option>
+                                            <option value="0">No</option>
+                                            <option value="" selected>Todos</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="bVistoCorreo">Visto en el correo</label>
+
+                                        <select id="bVistoCorreo" class="form-control custom-select js-select">
+                                            @*<option disabled="disabled">Visto en el correo</option>*@
+                                            <option value="1">Si</option>
+                                            <option value="0">No</option>
+                                            <option value="" selected>Todos</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="bDescargado">Descargaron la boleta</label>
+
+                                        <select id="bDescargado" class="form-control custom-select js-select">
+                                            @*<option disabled="disabled">Descargaron la boleta</option>*@
+                                            <option value="1">Si</option>
+                                            <option value="0">No</option>
+                                            <option value="" selected>Todos</option>
+                                        </select>
+                                    </div>
+
+
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-3">
+                                        <label for="bCorreoEnviado">Enviados al Correo Electronico</label>
+
+                                        <select id="bCorreoEnviado" class="form-control custom-select js-select">
+                                            @*<option disabled="disabled">Enviados al Correo Electronico</option>*@
+                                            <option value="1">Si</option>
+                                            <option value="0">No</option>
+                                            <option value="" selected>Todos</option>
+                                        </select>
+                                    </div>
+
+
+                                    <div class="col-md-3">
+                                        <label for="anio_select">Año</label>
+
+                                        <select id="anio_select" class="form-control custom-select">
+                                            <option value="">Años</option>
+                                            <option value="2019">2019</option>
+                                            <option value="2020">2020</option>
+                                            <option value="2021">2021</option>
+                                            <option value="2022" selected>2022</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="mes_select">Mes</label>
+                                        <select id="mes_select" class="form-control custom-select js-select">
+                                            <option value="">Ver todos</option>
+                                            <option value="01">Enero</option>
+                                            <option value="02">Febrero</option>
+                                            <option value="03">Marzo</option>
+                                            <option value="04">Abril</option>
+                                            <option value="05">Mayo</option>
+                                            <option value="06">Junio</option>
+                                            <option value="07">Julio</option>
+                                            <option value="08">Agosto</option>
+                                            <option value="09">Septiembre</option>
+                                            <option value="10">Octubre</option>
+                                            <option value="11">Noviembre</option>
+                                            <option value="12">Diciembre</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="vTipoTrabajador">Régimen</label>
+                                        <select id="vTipoTrabajador" class="form-control custom-select js-select">
+                                            <option value="">Todos</option>
+                                            <option value="AGRO RURAL - CAS">AGRO RURAL - CAS</option>
+                                            <option value="MINAGRI - EMPLEADOS">MINAGRI - EMPLEADOS</option>
+                                            <option value="AGRO RURAL - PRACTICANTES">AGRO RURAL - PRACTICANTES</option>
+                                            <option value="AGRO RURAL - SENTENCIA JUDI.">AGRO RURAL - SENTENCIA JUDI.</option>
+                                            <option value="OTROS">OTROS</option>
+                                            <option value="AGRO RURAL - RH">AGRO RURAL - RH</option>
+                                            <option value="AGRO RURAL - OBREROS">AGRO RURAL - OBREROS</option>
+                                            <option value="AGRO RURAL - REINCORPORADOS">AGRO RURAL - REINCORPORADOS</option>
+                                        </select>
+                                    </div>
+
+
+
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-12 d-flex justify-content-end align-items-end">
+
+                                        <button id="send-masive-mails" class="btn btn-success btn-wth-icon btn-rounded icon-right">
+                                            <span class="btn-text">Enviar Correos</span> <span class="icon-label"><span class="feather-icon"><i data-feather="arrow-right-circle"></i></span> </span>
+                                        </button>
+                                        <div class="wrap-masive-mails">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                <hr />
+
+                                <table id="datable_1" class="table table-boleta w-100 display pb-30"></table>
+                                <a id="dwnlink" download="boleta.pdf" style="display:none;"></a>
+                                <!-- Modal -->
+                                <div class="modal fade" id="modalPdfModal" tabindex="-1" role="dialog" aria-labelledby="modalPdfModal" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Boleta</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+    <!-- /Row -->
+    <!-- Modal -->
+    <div class="modal fade" id="modalAnular" tabindex="-1" role="dialog" aria-labelledby="modalAnular" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Anular Boleta</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <table class="table table-sm">
+                        <tbody>
+                            <tr>
+                                <th scope="row">Nombres y Apellidos:</th>
+                                <td><strong class="js-anular-nombres"></strong></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">DNI:</th>
+                                <td><strong class="js-anular-dni"></strong></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Año:</th>
+                                <td><strong class="js-anular-anio"></strong></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Mes:</th>
+                                <td><strong class="js-anular-mes"></strong></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Tipo:</th>
+                                <td><strong class="js-anular-tipo"></strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <form id="formAnular" data-parsley-validate>
+                        <input id="vDni_j" type="hidden" value="" class="type" />
+                        <input id="vAnio_j" type="hidden" value="" class="type" />
+                        <input id="vMes_j" type="hidden" value="" class="type" />
+                        <input id="vTipoBoleta_j" type="hidden" value="" class="type" />
+                        <div class="form-group">
+                            <label class="lbl-form" for="vMotivo">Ingrese Motivo:</label>
+                            <textarea id="vMotivo" class="form-control" name="motivo" data-parsley-required data-parsley-error-message="Ingrese un motivo"></textarea>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button id="btnAnular" type="button" class="btn btn-green">Anular</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

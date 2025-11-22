@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+    <meta name="description" content="A responsive bootstrap 4 admin dashboard template by hencework" />
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Libraries CSS -->
+    @Styles.Render("~/bundles/styles")
+          
+
+    <!-- Custom CSS -->
+    @Styles.Render("~/Content/dist/css/style.css", "~/Content/Main.css")
+
+
+    <link type="text/css" rel="stylesheet" media="all" href="https://intranet.agrorural.gob.pe/comechat/css.php" />
+
+
+</head>
+
+<body>
+    <input type="hidden" id="urlWebApi" value="@System.Configuration.ConfigurationManager.AppSettings["urlWebApi"]" />
+    <input type="hidden" id="urlMvc" value="@System.Configuration.ConfigurationManager.AppSettings["urlMvc"]" />
+    <!-- HK Wrapper -->
+    <div class="hk-wrapper hk-horizontal-nav">
+
+        @Html.Partial("_Header")
+        <!-- Main Content -->
+        <div class="hk-pg-wrapper" style="background-image:url(@Url.Content("~/Content/images/agronet_opacity.png"))">
+            @RenderBody()
+
+
+            @Html.Partial("_Footer")
+        </div>
+        <!-- /Main Content -->
+    </div>
+    <!-- /HK Wrapper -->
+    @Scripts.Render("~/bundles/js")
+    
+    @*<script type="text/javascript" charset="utf-8" src="https://intranet.agrorural.gob.pe/comechat/js.php"></script>*@
+
+    <!-- Init JavaScript -->
+    @Scripts.Render("~/Content/dist/js/toggle-data.js")
+    @Scripts.Render("~/Content/dist/js/init.js")
+    @*@Scripts.Render("~/Content/dist/js/dashboard2-data.js")*@
+
+
+    <script src="~/Scripts/Main.js?noCache=@Guid.NewGuid().ToString()" defer></script>
+    <script src="~/Scripts/Helpers/Util.js?noCache=@Guid.NewGuid().ToString()"></script>
+
+    @RenderSection("scripts", required: false)
+</body>
+
+</html>
+
+
+
+
