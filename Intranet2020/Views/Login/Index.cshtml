@@ -1,101 +1,161 @@
-﻿<!-- 
-@{
+﻿@{
     Layout = null;
-    ViewBag.Title = "Accesando a la Intranet";
+    ViewBag.Title = "Login - Sistema de Boletas";
 }
 
 <!DOCTYPE html>
 <html>
-
 <head>
-
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+
     <title>@ViewBag.Title</title>
-    <meta name="description" content="Intranet del Programa de Desarrollo Productivo Agrario Rural - AGRO RURAL" /> 
-    <link rel="shortcut icon" href="favicon.ico">
-    <link rel="icon" href="favicon.ico" type="image/x-icon"> 
-    @Styles.Render("~/Content/vendors/morris.js/morris.css") 
+
+    <link rel="icon" href="favicon.ico" />
+
+    @Styles.Render("~/Content/vendors/morris.js/morris.css")
     @Styles.Render("~/Content/vendors/jquery-toggles/css/toggles.css")
-    @Styles.Render("~/Content/vendors/jquery-toggles/css/themes/toggles-light.css") 
-    @Styles.Render("~/Content/vendors/jquery-toast-plugin/dist/jquery.toast.min.css") 
-    @Styles.Render("~/Content/dist/css/style.css") 
+    @Styles.Render("~/Content/vendors/jquery-toggles/css/themes/toggles-light.css")
+    @Styles.Render("~/Content/vendors/jquery-toast-plugin/dist/jquery.toast.min.css")
+    @Styles.Render("~/Content/dist/css/style.css")
     @Styles.Render("~/Content/Main.css")
 
+    <style>
+        body {
+            background: #f3f6fa;
+        }
 
+        .login-card {
+            background: #fff;
+            border-radius: 18px;
+            padding: 40px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+            width: 100%;
+            max-width: 460px;
+        }
+
+        .side-bg {
+            background-image: url('@Url.Content("~/Content/images/bg1.jpg")');
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+        }
+
+        .brand-img {
+            max-height: 70px;
+        }
+
+        .btn-primary-custom {
+            background: #006837;
+            color: #fff;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 18px;
+            border: none;
+            width: 100%;
+        }
+
+        .btn-primary-custom:hover {
+            background: #015a32;
+        }
+
+        .title-main {
+            font-size: 42px;
+            font-weight: 700;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            opacity: .7;
+        }
+
+        /* === RESPONSIVE === */
+        @@media (max-width: 991px) {
+            .title-main {
+                font-size: 32px;
+            }
+            .login-card {
+                padding: 30px;
+            }
+        }
+
+        @@media (max-width: 768px) {
+            .side-bg {
+                display: none !important;
+            }
+            .login-card {
+                margin: 40px auto;
+                box-shadow: none;
+                padding: 25px;
+            }
+            body {
+                background: #fff;
+            }
+        }
+
+        @@media (max-width: 480px) {
+            .title-main {
+                font-size: 26px;
+            }
+            .brand-img {
+                max-height: 55px;
+            }
+        }
+    </style>
 </head>
 
 <body>
+
     <input type="hidden" id="urlWebApi" value="@System.Configuration.ConfigurationManager.AppSettings["urlWebApi"]" />
     <input type="hidden" id="urlMvc" value="@System.Configuration.ConfigurationManager.AppSettings["urlMvc"]" />
 
+    <div class="container-fluid">
+        <div class="row min-vh-100 justify-content-center align-items-center">
 
-    <div class="hk-wrapper">
-        <div class="hk-pg-wrapper hk-auth-wrapper">
-            <header class="d-flex justify-content-between align-items-center">
+            <div class="col-md-6 side-bg d-none d-md-block"></div>
 
-                <a class="d-flex auth-brand align-items-center" href="#">
-                    <img class="brand-img d-inline-block mr-5 img-fluid" src="@Url.Content("~/Content/images/agronet_blanco.png")" alt="Agro Rural" />
-                </a>
-                <div class="btn-group btn-group-sm">
-                    <a href="#" class="btn btn-outline-secondary">Soporte Tecnico</a>
-                    <a href="#" class="btn btn-outline-secondary">Nosotros</a>
-                </div>
-            </header>
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-xl-5 pa-0">
-                        <div id="owl_demo_1" class="owl-carousel dots-on-item owl-theme">
-                            <div class="fadeOut item auth-cover-img overlay-wrap" style="background-image:url(@Url.Content("~/Content/images/bg1.jpg"));">
-                                <div class="auth-cover-info py-xl-0 pt-100 pb-50">
-                                    <div class="auth-cover-content text-center w-xxl-75 w-sm-90 w-xs-100">
-                                        <h1 class="display-3 text-white mb-20">Acciones para recuperación de pastos naturales.</h1>
-                                        <p class="text-white">A través de Agro Rural se fortalecen las capacidades en las familias productoras de zonas rurales sobre las ventajas y desventajas en los sistemas de pastoreo.</p>
-                                    </div>
-                                </div>
-                                <div class="bg-overlay bg-trans-dark-50"></div>
-                            </div>
-                            <div class="fadeOut item auth-cover-img overlay-wrap" style="background-image:url(@Url.Content("~/Content/images/bg2.jpg"));">
-                                <div class="auth-cover-info py-xl-0 pt-100 pb-50">
-                                    <div class="auth-cover-content text-center w-xxl-75 w-sm-90 w-xs-100">
-                                        <h1 class="display-3 text-white mb-20">Construcción de cobertizos en zonas altoandinas.</h1>
-                                        <p class="text-white">A través de Agro Rural se viene trabajando de manera articulada en 10 departamentos, 33 provincias y 76 distritos a fin de proteger a las alpacas y ovinos de las bajas temperaturas, pertenecientes a las familias campesinas que habitan en las zonas vulnerables.</p>
-                                    </div>
-                                </div>
-                                <div class="bg-overlay bg-trans-dark-50"></div>
-                            </div>
-                        </div>
+            <div class="col-md-6 d-flex justify-content-center">
+                <div class="login-card">
+
+                    <div class="text-center mb-30">
+                        <img class="brand-img" src="@Url.Content("~/Content/images/logo.png")" alt="Logo">
                     </div>
-                    <div class="col-xl-7 pa-0">
-                        <div class="auth-form-wrap py-xl-0 py-50">
-                            <div class="auth-form w-xxl-55 w-xl-75 w-sm-90 w-xs-100">
-                                <h1 class="display-4 mb-10">¡Bienvenido!</h1>
-                                <p class="mb-4">Ingresa a la intranet del Programa de Desarrollo Productivo Agrario Rural - AGRO RURAL.</p>
-                                <form id="form-singup" data-parsley-validate>
-                                    <div class="form-group">
-                                        <input class="form-control" name="vUsuario" id="vUsuario" placeholder="Usuario" type="text" data-parsley-required>
-                                    </div>
-                                    <div class="form-group">
-                                        <input class="form-control" placeholder="Contraseña" type="password" id="vContrasena" name="vContrasena" data-parsley-required>
 
-                                    </div>
-                                    <button id="btn-form-singup" class="btn btn-default btn-block" type="submit">Ingresar</button>
-                                    <span id="js-spinner" class="spinner-waiting"></span>
-                                </form>
-                                <p class="font-14 text-center mt-15">¿Olvidaste tu contraseña? Haz click <a href="#">aquí</a></p>
-                                <div class="option-sep">&nbsp;</div>
+                    <h1 class="title-main mb-10 text-center">Bienvenido</h1>
+                    <p class="text-center mb-30">Accede al Sistema de Boletas</p>
 
-                                <p class="text-center mb-4">Desarrollado por la Unidad de  Tecnologías de la nformación 2020.</p>
-                                <a class="brand-login mb-20" href="#">
-                                    <img class="img-fluid" src="@Url.Content("~/Content/images/logo.png")" alt="Agro Rural" />
-                                </a>
+                    <form id="form-singup" data-parsley-validate>
 
-                            </div>
+                        <div class="form-group">
+                            <label>Usuario</label>
+                            <input class="form-control" name="vUsuario" id="vUsuario"
+                                   type="text" placeholder="Ingrese usuario" data-parsley-required />
                         </div>
-                    </div>
+
+                        <div class="form-group">
+                            <label>Contraseña</label>
+                            <input class="form-control" name="vContrasena" id="vContrasena"
+                                   type="password" placeholder="Ingrese contraseña" data-parsley-required />
+                        </div>
+
+                        <button id="btn-form-singup" class="btn btn-primary-custom" type="submit">
+                            Ingresar
+                        </button>
+
+                        <div class="text-center mt-3">
+                            <span id="js-spinner" class="spinner-waiting"></span>
+                        </div>
+
+                    </form>
+
+                    <p class="text-center footer-text mt-20">
+                        Desarrollado por la Unidad de Tecnologías de la Información — 2025
+                    </p>
+
                 </div>
             </div>
-        </div>        
+
+        </div>
     </div>
 
     @Scripts.Render("~/Content/vendors/jquery/dist/jquery.min.js")
@@ -110,86 +170,9 @@
     @Scripts.Render("~/Scripts/Vendor/ParsleyJS/i18n/es.js")
     @Scripts.Render("~/Content/dist/js/init.js")
     @Scripts.Render("~/Content/dist/js/login-data.js")
- 
+
     <script src="~/Scripts/Helpers/Util.js?noCache=@Guid.NewGuid().ToString()"></script>
     <script src="~/Scripts/Login/Login.js?noCache=@Guid.NewGuid().ToString()"></script>
-
-</body>
-
-</html>
- -->
-
-@{
-    Layout = null;
-    ViewBag.Title = "Sistema de Boletas | AGRORURAL";
-}
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="utf-8">
-    <title>@ViewBag.Title</title>
- 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-
-    <style>
-        body {
-            background: url('@Url.Content("~/Content/images/bg1.jpg")') no-repeat center center/cover;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .glass-card {
-            background: rgba(255,255,255,0.12);
-            border: 1px solid rgba(255,255,255,0.3);
-            backdrop-filter: blur(10px);
-            border-radius: 18px;
-            padding: 40px;
-            width: 390px;
-            color: white;
-        }
-        .form-control{
-            background: rgba(255,255,255,0.3)!important;
-            border: none;
-            color:white;
-        }
-        .form-control::placeholder { color: #eee!important; }
-        .btn-custom{ background:#00b25a; border:none; }
-    </style>
-</head>
-<body>
-
-<div class="glass-card shadow-lg text-center">
-    <img src="@Url.Content("~/Content/images/logo.png")" width="100" class="mb-3"/>
-    <h3 class="fw-bold mb-3">Sistema de Boletas</h3>
-
-    <!-- <form method="post" action="/Login/Auth">
-        <input type="text" name="Usuario" class="form-control mb-3" placeholder="Usuario" required />
-        <input type="password" name="Contrasena" class="form-control mb-4" placeholder="Contraseña" required />
-
-        <button class="btn btn-custom w-100 text-white mb-2">Ingresar</button>
-        <a href="#" class="text-white-50">¿Olvidaste tu contraseña?</a>
-    </form> -->
-
-    <form id="loginForm">
-    <input type="text" name="Usuario" class="form-control mb-3" placeholder="Usuario" required />
-    <input type="password" name="Contrasena" class="form-control mb-4" placeholder="Contraseña" required />
-
-    <button id="btnLogin" type="submit" class="btn btn-custom w-100 text-white mb-2">Ingresar</button>
-</form>
-
-<script>
-document.getElementById("btnLogin").addEventListener("click", function(e){
-    e.preventDefault();
-    
-    // Aquí luego pondrás autenticación real
-    window.location.href = "/Boletas/index"; // URL temporal
-});
-</script>
-
-
-</div>
 
 </body>
 </html>

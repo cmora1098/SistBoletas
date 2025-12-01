@@ -4,36 +4,36 @@
 };
 
 // Retornar al Login - CMORA
-// $(document).ready(function () {
+$(document).ready(function () {
 
-//     globals.urlWebApi = $("#urlWebApi").val();
-//     globals.urlMvc = $("#urlMvc").val();
+    globals.urlWebApi = $("#urlWebApi").val();
+    globals.urlMvc = $("#urlMvc").val();
     
     
-//     if (CheckSession()) {
-//         $.redirect(globals.urlMvc + "Login/Index", null);
-//     } else {
-//         globals.storage = JSON.parse(localStorage.usuario);
-//         // Obtenemos los datos y los almacenamos en variables
+    if (CheckSession()) {
+        $.redirect(globals.urlMvc + "Login/Index", null);
+    } else {
+        globals.storage = JSON.parse(localStorage.usuario);
+        // Obtenemos los datos y los almacenamos en variables
       
-//         //console.log(`Hola, mi nombre es ${globals.objStorage.Nombres} ${globals.objStorage.APaterno}`);
-//     }
+        //console.log(`Hola, mi nombre es ${globals.objStorage.Nombres} ${globals.objStorage.APaterno}`);
+    }
       
 
 
-//     $('#btn-logout').click(function () {
+    $('#btn-logout').click(function () {
 
-//         localStorage.clear();
-//         $.redirect(globals.urlMvc + "Login/Index", null);
-//     });
+        localStorage.clear();
+        $.redirect(globals.urlMvc + "Login/Index", null);
+    });
 
-//     EjecutarScriptDetalle();
+    EjecutarScriptDetalle();
 
-//     $('#user_name').prepend(globals.storage.Nombres + ' ' + globals.storage.APaterno);
+    $('#user_name').prepend(globals.storage.Nombres + ' ' + globals.storage.APaterno);
 
 
                 
-// });
+});
 
 function CheckSession() {       
 
