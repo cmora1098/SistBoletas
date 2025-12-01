@@ -8,7 +8,7 @@ function EjecutarScriptDetalle() {
 
     //console.log(globals.storage);
 
-   
+
     //var searchData = {};
 
     //if ($('#anio_select').val() == 0) {
@@ -16,9 +16,9 @@ function EjecutarScriptDetalle() {
     //} else {
     //    searchData.vAnio = $('#anio_select').val();
     //};
-    
 
-    
+
+
 
     var date = new Date().toISOString().substr(0, 19)
     var m = date.substr(5, 2);
@@ -37,7 +37,7 @@ function EjecutarScriptDetalle() {
         listarBoletasAdmin(searchData);
 
         $('#container_admin').show();
-        
+
     } else if (globals.storage.iCodPerfil == 2) {
 
 
@@ -96,63 +96,63 @@ function EjecutarScriptDetalle() {
         modal.find('#vTipoBoleta_j').val("");
         modal.find('#vMotivo').val("");
 
-        
+
 
     })
 
-     $('#btnAnular').on('click', function (e) {
-         e.preventDefault();
-
-         
-            //$('#btn-form-singup').hide();
-            //$('#js-spinner').html('<i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>');
-
-         var form = $('#formAnular');
+    $('#btnAnular').on('click', function (e) {
+        e.preventDefault();
 
 
-         var data = {};
+        //$('#btn-form-singup').hide();
+        //$('#js-spinner').html('<i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>');
 
-         data.vAnio = $('#vAnio_j').val();
-         data.vMes = $('#vMes_j').val();
-         data.vDni = $('#vDni_j').val();
-         data.vTipoBoleta = $('#vTipoBoleta_j').val();
-         data.vMotivoAnulacion = $('#vMotivo').val();
-         data.vUsuarioAnulacion = globals.storage.vUsuario;
-
-            if (form.parsley().isValid()) {
-
-                $.ajax({
-                    type: "POST",
-                    url: globals.urlWebApi + "api/Boleta/AnularBoleta",
-                    data: data,
-                    beforeSend: function (xhr) {
-                        xhr.setRequestHeader('Authorization',
-                            "Bearer " + globals.storage.Token);
-                    }
-                }).done(function (response) {
-
-                    if (response.vMensaje == "Se Anulo la boleta") {
-
-                        $('#modalAnular').modal('hide')
-                        updateTable();
-                    }
-                    
-
-               
-
-                }).fail(function (xhr, status, error) {
-                    console.log(xhr, status, error);
-                    console.log(error);
-                    ;
-                });
+        var form = $('#formAnular');
 
 
-            } else {
-                form.parsley().validate();
-            }
-        });
-        
-          
+        var data = {};
+
+        data.vAnio = $('#vAnio_j').val();
+        data.vMes = $('#vMes_j').val();
+        data.vDni = $('#vDni_j').val();
+        data.vTipoBoleta = $('#vTipoBoleta_j').val();
+        data.vMotivoAnulacion = $('#vMotivo').val();
+        data.vUsuarioAnulacion = globals.storage.vUsuario;
+
+        if (form.parsley().isValid()) {
+
+            $.ajax({
+                type: "POST",
+                url: globals.urlWebApi + "api/Boleta/AnularBoleta",
+                data: data,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization',
+                        "Bearer " + globals.storage.Token);
+                }
+            }).done(function (response) {
+
+                if (response.vMensaje == "Se Anulo la boleta") {
+
+                    $('#modalAnular').modal('hide')
+                    updateTable();
+                }
+
+
+
+
+            }).fail(function (xhr, status, error) {
+                console.log(xhr, status, error);
+                console.log(error);
+                ;
+            });
+
+
+        } else {
+            form.parsley().validate();
+        }
+    });
+
+
 }
 
 function updateTable() {
@@ -218,194 +218,215 @@ function getDataFields() {
 }
 
 
-function listarBoletasAdmin(parametros){
+function listarBoletasAdmin(parametros) {
 
-    //console.log(parametros);
-    var tblBoletas = $("#datable_1")
-        .dataTable({
-            "language": dataTableLanguage,
-            "paging": false,
-            "scrollX": true,
-            "scrollY": "500px",
-            "scrollCollapse": true,
-            "sAjaxSource": globals.urlWebApi +'api/Boleta/ListarBoletas',
-            "fnServerData": function (url, odata, callback) {
-                var data = parametros;
-                data.iCodPerfil = globals.storage.iCodPerfil;
-                
-                $.ajax({
-                    "url": url,
-                    "dataSrc": "",
-                    "data": data,
-                    "beforeSend": function (xhr) {
-                        xhr.setRequestHeader('Authorization',
-                            "Bearer " + globals.storage.Token);
-                    },
-                    "success":
+    // Reinicio seguro de DataTable
+    if ($.fn.DataTable.isDataTable('#datable_1')) {
+        $('#datable_1').DataTable().clear();
+        $('#datable_1').DataTable().destroy();
+        $('#datable_1').empty();
+    }
 
-                        function (response) {
-                            if (response.length === 0) {
-                                callback({
-                                    data: response,
-                                    recordsTotal: 0,
-                                    recordsFiltered: 0
-                                });
-                            } else {
-                                if (response.vMensaje === "NO EXISTEN BOLETAS") {
-                                    callback({
-                                        data: response,
-                                        recordsTotal: 0,
-                                        recordsFiltered: 0
-                                    });
-                                } else {
-                                    callback({
-                                        data: response,
-                                        recordsTotal: response.length,
-                                        recordsFiltered: response.length
-                                    });
-                                }
-                            }
-                        },
-                    "contentType": "application/x-www-form-urlencoded; charset=utf-8",
-                    "dataType": "json",
-                    "type": "POST",
-                    "cache": false,
-                    "error": function (xhr, status, error) {
-                        console.log(xhr, status, error);
-                        console.log("DataTables warning: JSON data from server failed to load or be parsed. " +
-                            "This is most likely to be caused by a JSON formatting error.");
-                        $('#datable_1').DataTable().clear();
-                        $('#datable_1').DataTable().destroy();
-                    },
-                    "fail": function(xhr, status, error) {
-                        console.log(xhr, status, error);
-                        console.log(error);
+    var tblBoletas = $("#datable_1").DataTable({
+        language: dataTableLanguage,
+        responsive: true,
 
+        // 🔥 PAGINADO ACTIVADO
+        paging: true,
+        pageLength: 25,
+        lengthMenu: [[25, 50, 100, -1], [25, 50, 100, "Todos"]],
+
+        // 🔍 BUSCADOR ACTIVADO
+        searching: true,
+        searchDelay: 250,
+
+        // Scroll horizontal permitido
+        scrollX: true,
+
+        processing: true,
+        deferRender: true,
+
+        sAjaxSource: globals.urlWebApi + 'api/Boleta/ListarBoletas',
+
+        fnServerData: function (url, odata, callback) {
+            var data = parametros;
+            data.iCodPerfil = globals.storage.iCodPerfil;
+
+            $.ajax({
+                url: url,
+                dataSrc: "",
+                data: data,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', "Bearer " + globals.storage.Token);
+                },
+                success: function (response) {
+                    if (response.length === 0) {
+                        callback({ data: [], recordsTotal: 0, recordsFiltered: 0 });
+                    } else if (response.vMensaje === "NO EXISTEN BOLETAS") {
+                        callback({ data: [], recordsTotal: 0, recordsFiltered: 0 });
+                    } else {
+                        callback({
+                            data: response,
+                            recordsTotal: response.length,
+                            recordsFiltered: response.length
+                        });
                     }
-                });
+                },
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                dataType: "json",
+                type: "POST",
+                cache: false,
+                error: function (xhr, status, error) {
+                    console.log(xhr, status, error);
+                    console.log("DataTables warning: JSON parsing error.");
+                    $('#datable_1').DataTable().clear();
+                    $('#datable_1').DataTable().destroy();
+                }
+            });
+        },
+
+        columns: [
+            { title: "Id", searchable: true, data: "iCodBoleta" },
+            { title: "Tipo", data: "vTipoBoleta" },
+            { title: "Régimen", data: "vTipoTrabajador" },
+            { title: "Area", data: "vArea" },
+            { title: "DNI", searchable: true, data: "vDni" },
+            { title: "A. Paterno", searchable: true, orderable: true, data: "vApePat" },
+            { title: "A. Materno", searchable: true, data: "vApeMat" },
+            { title: "Nombres", searchable: true, data: "vNombres" },
+            { title: "Correo", searchable: true, data: "vCorreo" },
+            { className: "text-center", title: "Año", data: "vAnio" },
+            { className: "text-center", title: "Mes", data: "vMes" },
+
+            {
+                className: "text-center",
+                title: "Visto",
+                data: "bVisto",
+                createdCell: function (td, cellData) {
+                    $(td).html(cellData == true ? "Si" : "No");
+                }
             },
-            "columns": [              
-                { "title": "Id", "searchable": true, "data": "iCodBoleta" },
-                { "title": "Tipo", "data": "vTipoBoleta" },
-                { "title": "Régimen", "data": "vTipoTrabajador" },
-                { "title": "Area", "data": "vArea" },
-                { "title": "DNI", "searchable": true, "data": "vDni" },
-                { "orderable": true, "searchable": true, "title": "A. Paterno", "data": "vApePat" }, 
-                { "searchable": true, "title": "A. Materno", "data": "vApeMat" }, 
-                { "searchable": true, "title": "Nombres", "data": "vNombres" }, 
-                { "searchable": true, "title": "Correo", "data": "vCorreo" }, 
-                { "className": "text-center", "title": "Año", "data": "vAnio" }, 
-                { "className": "text-center", "title": "Mes", "data": "vMes" },
-                {
-                    "className": "text-center", "title": "Visto", "data": "bVisto", "target": 5, "createdCell": function (td, cellData, rowData, row, col) {
-                        var e = $(td).html();
-                        if (e == 'true') {
-                            $(td).html("Si");
-                        } else {
-                            $(td).html("No");
-                        }
-                    }
-                },
-                {
-                    "className": "text-center", "title": "Descargado", "data": "bDescargado", "target": 5, "createdCell": function (td, cellData, rowData, row, col) {
-                        var e = $(td).html();
-                        if (e == 'true') {
-                            $(td).html("Si");
-                        } else {
-                            $(td).html("No");
-                        }
-                    }
-                },
-                {
-                    "className": "text-center", "title": "Correo Enviado", "data": "bCorreoEnviado", "target": 5
-                    , "createdCell": function (td, cellData, rowData, row, col) {
-                        var e = $(td).html();
-                        if (e == 'true') {
-                            $(td).html("Si");
-                        } else {
-                            $(td).html("No");
-                        }
-                    }
-                }, 
+            {
+                className: "text-center",
+                title: "Descargado",
+                data: "bDescargado",
+                createdCell: function (td, cellData) {
+                    $(td).html(cellData == true ? "Si" : "No");
+                }
+            },
+            {
+                className: "text-center",
+                title: "Correo Enviado",
+                data: "bCorreoEnviado",
+                createdCell: function (td, cellData) {
+                    $(td).html(cellData == true ? "Si" : "No");
+                }
+            },
+            {
+                className: "text-center",
+                title: "Visto x Correo",
+                data: "bVistoCorreo",
+                createdCell: function (td, cellData) {
+                    $(td).html(cellData == true ? "Si" : "No");
+                }
+            },
 
-                {
-                    "className": "text-center", "title": "Visto x Correo", "data": "bVistoCorreo", "target": 5
-                    , "createdCell": function (td, cellData, rowData, row, col) {
-                        var e = $(td).html();
-                        if (e == 'true') {
-                            $(td).html("Si");
-                        } else {
-                            $(td).html("No");
-                        }
-                    }
-                },                
-                {
-                    "className": "text-center", "title": "Fecha Anulación", "data": "dFechaAnulacion",
-                    "createdCell": function (td, cellData, rowData, row, col) {
-                        var e = $(td).html();
-                        if (e == '01/01/1900') {
-                            $(td).html("");
-                        }
+            {
+                className: "text-center",
+                title: "Fecha Anulación",
+                data: "dFechaAnulacion",
+                createdCell: function (td, cellData) {
+                    if (cellData === "01/01/1900") $(td).html("");
+                }
+            },
 
-                    }
-                },
-                { "title": "Usuario Anulación", "data": "vUsuarioAnulacion" },
-                { "title": "Motivo Anulación", "data": "vMotivoAnulacion" },
-                {
-                    "className": "text-center", "title": "Acciones", "data": "vAcciones",
+            { title: "Usuario Anulación", data: "vUsuarioAnulacion" },
+            { title: "Motivo Anulación", data: "vMotivoAnulacion" },
 
-                    "createdCell": function (td, cellData, rowData, row, col) {
-                        var e = $(td).html();
-                        var r = $(rowData);
+            /* 
+                🔥 ACCIONES ORIGINAL — SIN CAMBIAR NADA 
+            */
+            {
+                className: "text-center",
+                title: "Acciones",
+                data: "vAcciones",
+                createdCell: function (td, cellData, rowData, row, col) {
 
-                        let vAnio = rowData.vAnio,
-                            vDni = rowData.vDni,
-                            vMes = rowData.vMes,
-                            vNombres = rowData.vNombres,
-                            vApePat = rowData.vApePat,
-                            vApeMat = rowData.vApeMat,
-                            vTipoBoleta = rowData.vTipoBoleta;
+                    var e = $(td).html();
+                    var r = $(rowData);
 
+                    let vAnio = rowData.vAnio,
+                        vDni = rowData.vDni,
+                        vMes = rowData.vMes,
+                        vNombres = rowData.vNombres,
+                        vApePat = rowData.vApePat,
+                        vApeMat = rowData.vApeMat,
+                        vTipoBoleta = rowData.vTipoBoleta;
 
-                        if (r[0].dFechaAnulacion == '01/01/1900') {
-                            
-                            $(td).find('.button-list').append('<button class="js-btn-cancel btn btn-icon btn-icon-circle btn-primary btn-icon-style-3" data-mes="' + vMes + '" data-anio="' + vAnio + '" data-dni="' + vDni + '" data-tipo="' + vTipoBoleta + '" data-nombres="' + vNombres + '" data-apepat="' + vApePat + '" data-apemat="' + vApeMat + '" data-toggle="modal" data-target="#modalAnular"><span class="btn-icon-wrap"><i class="fa fa-power-off"></i></span></button>');
-                        } else {
-                            $(td).find('.js-btn-mail').remove();
-                        }
+                    if (r[0].dFechaAnulacion == '01/01/1900') {
 
-                    }
-                },
-                {
-                    "orderable": false, "className": "text-center", "title": '<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="customCheck1"><label class="custom-control-label js-checkbox-all" for="customCheck1">&nbsp;</label></div>', "data": "iCodBoleta", "createdCell": function (td, cellData, rowData, row, col) {
+                        $(td).find('.button-list').append(
+                            '<button class="js-btn-cancel btn btn-icon btn-icon-circle btn-primary btn-icon-style-3" ' +
+                            'data-mes="' + vMes + '" data-anio="' + vAnio + '" data-dni="' + vDni + '" ' +
+                            'data-tipo="' + vTipoBoleta + '" data-nombres="' + vNombres + '" ' +
+                            'data-apepat="' + vApePat + '" data-apemat="' + vApeMat + '" ' +
+                            'data-toggle="modal" data-target="#modalAnular">' +
+                            '<span class="btn-icon-wrap"><i class="fa fa-power-off"></i></span></button>'
+                        );
 
-                        let iCodBoleta = rowData.iCodBoleta,
-                            vAnio = rowData.vAnio,
-                            vApeMat = rowData.vApeMat,
-                            vApePat = rowData.vApePat,
-                            vCorreo = rowData.vCorreo,
-                            vDni = rowData.vDni,
-                            vMes = rowData.vMes,
-                            vNombres = rowData.vNombres,
-                            vTipoBoleta = rowData.vTipoBoleta;
-
-                        var r = $(rowData);
-                        if (r[0].dFechaAnulacion == '01/01/1900') {
-
-                            $(td).html('<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input js-sr-checkbox" id="check_' + iCodBoleta + '" data-mail="' + vCorreo + '" data-nombres="' + vNombres + '" data-apepat="' + vApePat + '" data-apemat="' + vApeMat + '" data-mes="' + vMes + '" data-anio="' + vAnio + '" data-dni="' + vDni + '" data-tipo="' + vTipoBoleta + '"><label class="custom-control-label js-checkbox" for="check_' + iCodBoleta + '">&nbsp;</label></div>');
-                        } else {
-                            $(td).html("");
-                        }
-
-
-                        
-
+                    } else {
+                        $(td).find('.js-btn-mail').remove();
                     }
                 }
+            },
 
-            ]
-        });
+            /* 
+                🔥 CHECKBOX ORIGINAL — SIN CAMBIAR NADA 
+            */
+            {
+                orderable: false,
+                className: "text-center",
+                title:
+                    '<div class="custom-control custom-checkbox">' +
+                    '<input type="checkbox" class="custom-control-input" id="customCheck1">' +
+                    '<label class="custom-control-label js-checkbox-all" for="customCheck1">&nbsp;</label></div>',
+                data: "iCodBoleta",
+                createdCell: function (td, cellData, rowData, row, col) {
+
+                    let iCodBoleta = rowData.iCodBoleta,
+                        vAnio = rowData.vAnio,
+                        vApeMat = rowData.vApeMat,
+                        vApePat = rowData.vApePat,
+                        vCorreo = rowData.vCorreo,
+                        vDni = rowData.vDni,
+                        vMes = rowData.vMes,
+                        vNombres = rowData.vNombres,
+                        vTipoBoleta = rowData.vTipoBoleta;
+
+                    var r = $(rowData);
+                    if (r[0].dFechaAnulacion == '01/01/1900') {
+
+                        $(td).html(
+                            '<div class="custom-control custom-checkbox">' +
+                            '<input type="checkbox" class="custom-control-input js-sr-checkbox" id="check_' + iCodBoleta + '" ' +
+                            'data-mail="' + vCorreo + '" data-nombres="' + vNombres + '" ' +
+                            'data-apepat="' + vApePat + '" data-apemat="' + vApeMat + '" ' +
+                            'data-mes="' + vMes + '" data-anio="' + vAnio + '" data-dni="' + vDni + '" ' +
+                            'data-tipo="' + vTipoBoleta + '">' +
+                            '<label class="custom-control-label js-checkbox" for="check_' + iCodBoleta + '">&nbsp;</label></div>'
+                        );
+
+                    } else {
+                        $(td).html("");
+                    }
+                }
+            }
+        ]
+
+    });
 }
+
+
 
 function listarBoletasUsuario(parametros) {
 
@@ -527,14 +548,14 @@ function accionesBoleta() {
         obj.iCodPerfil = 2;
         obj.vTipoBoleta = $this.data("tipo");
 
-            if (globals.storage.iCodPerfil == 1) {
-                obj.bDescargado = false;
-            } else if ((globals.storage.iCodPerfil == 2) ){
-                obj.bDescargado = true;
-            } else {
-                console.log("sapo");
-            }
-        
+        if (globals.storage.iCodPerfil == 1) {
+            obj.bDescargado = false;
+        } else if ((globals.storage.iCodPerfil == 2)) {
+            obj.bDescargado = true;
+        } else {
+            console.log("sapo");
+        }
+
         let opcion = "descarga";
         getData(obj, opcion);
 
@@ -543,7 +564,7 @@ function accionesBoleta() {
 
 
     $('.table-boleta').on('click', '.js-btn-watch', function () {
-        
+
         let $this = $(this);
         let obj = {};
 
@@ -585,10 +606,10 @@ function accionesBoleta() {
         objeto.vCorreo = $this.data("mail");
         objeto.iCodPerfil = globals.storage.iCodPerfil;
 
-        if (objeto.vCorreo.length !== 0 ) {
+        if (objeto.vCorreo.length !== 0) {
 
             $this.find('.btn-icon-wrap').html('<i class="fa fa-refresh fa-spin fa-1x fa-fw"></i><span class="sr-only"> Loading...</span >');
-            
+
             $.ajax({
                 type: "POST",
                 url: globals.urlWebApi + "/api/Boleta/EnviarCorreo",
@@ -599,12 +620,12 @@ function accionesBoleta() {
                 }
             })
                 .done(function (aData) {
-                            //console.log(aData.vMensaje);
+                    //console.log(aData.vMensaje);
 
                     if (aData.vMensaje == "Mail enviado") {
 
-                            $this.find('.btn-icon-wrap').html('<i class="fa fa-envelope-o" aria-hidden="true"></i>');
-                            msgSuccess();
+                        $this.find('.btn-icon-wrap').html('<i class="fa fa-envelope-o" aria-hidden="true"></i>');
+                        msgSuccess();
 
                     }
 
@@ -646,28 +667,28 @@ function getData(data, opcion) {
             };
 
             let pdf_ = "data:application/pdf;base64," + ObjResponse.pdf;
-            
+
 
             if (opcion === "visto") {
-                let iframe = '<iframe style="min-height:1200px;width: 100%;" src="' + pdf_+ '"></iframe>';
-                
+                let iframe = '<iframe style="min-height:1200px;width: 100%;" src="' + pdf_ + '"></iframe>';
+
                 $('#modalPdfModal .modal-body').html(iframe);
 
                 $('#modalPdfModal').modal('show');
-            } 
+            }
 
-            if (opcion ==="descarga") {
+            if (opcion === "descarga") {
                 let dlnk = document.getElementById('dwnlink');
                 dlnk.href = pdf_;
 
                 dlnk.click();
 
-            } 
+            }
 
             if (opcion === "mail") {
 
                 console.log("mail");
-            }           
+            }
 
 
         }
@@ -720,7 +741,7 @@ function msgSuccess2(correos) {
     $("body").removeAttr('class');
     $.toast({
         heading: '!Exito!',
-        text: '<i class="jq-toast-icon fa fa-smile-o fa-1x"" aria-hidden="true"></i> Se enviaron ' + correos+' correos',
+        text: '<i class="jq-toast-icon fa fa-smile-o fa-1x"" aria-hidden="true"></i> Se enviaron ' + correos + ' correos',
         position: 'top-right',
         loaderBg: '#f68daf',
         class: 'jq-has-icon jq-toast-success',
@@ -734,13 +755,13 @@ function msgSuccess2(correos) {
 function checkAll() {
 
     $(document).on('click', '.js-checkbox-all', function () {
-        
+
         var $box = $('#customCheck1');
         var $boxes = $('#datable_1').find('.js-sr-checkbox');
-        
-        
+
+
         if ($box.is(":checked")) {
-            
+
             $boxes.prop("checked", false);
         } else {
             $boxes.prop("checked", true);
@@ -767,27 +788,27 @@ function sendMasiveMail() {
 
         let $box = $('#customCheck1');
         $boxes = $('#datable_1').find('.js-sr-checkbox:checked');
-        
+
         var arrayboxes = [];
 
         for (var i = 0; i < $boxes.length; i++) {
-                                        
+
             let ip = $boxes.eq(i),
-                
+
                 ml = ip.data('mail');
             //console.log(ip);
             //console.log(ml);
 
             if (ml.length > 0) {
                 arrayboxes.push($boxes.eq(i));
-            }                       
+            }
 
         }
 
-        $('.wrap-masive-mails').append('Enviando ' + $boxes.length+' correos, esto puede tardar unos minutos. <i class= "fa fa-refresh fa-spin fa-1x fa-fw" ></i> <span class="sr-only"> Loading...</span>');
+        $('.wrap-masive-mails').append('Enviando ' + $boxes.length + ' correos, esto puede tardar unos minutos. <i class= "fa fa-refresh fa-spin fa-1x fa-fw" ></i> <span class="sr-only"> Loading...</span>');
         $('#send-masive-mails').hide();
 
-        
+
         counter = 0;
         recursively_ajax(arrayboxes);
     });
@@ -835,7 +856,7 @@ function recursively_ajax(arrayObjects) {
 
             if (counter < objects.length) {
 
-                setTimeout(recursively_ajax(objects), 3000);                
+                setTimeout(recursively_ajax(objects), 3000);
                 $('.wrap-masive-mails').html('');
                 $('#send-masive-mails').show();
                 var a = objects.length
@@ -849,7 +870,7 @@ function recursively_ajax(arrayObjects) {
 
 
         },
-        fail: function(xhr, status, error) {
+        fail: function (xhr, status, error) {
             console.log(xhr, status, error);
             console.log(error);
             msgAlert();
@@ -858,3 +879,30 @@ function recursively_ajax(arrayObjects) {
 }
 
 
+
+// CMORA - Listado de Año
+function cargarAnios(selectId, anioInicio = 2020) {
+    const select = document.getElementById(selectId);
+    const anioActual = new Date().getFullYear();
+
+    // Limpiar opciones
+    select.innerHTML = '<option value="">Años</option>';
+
+    // Generar opciones
+    for (let anio = anioInicio; anio <= anioActual; anio++) {
+        const option = document.createElement("option");
+        option.value = anio;
+        option.textContent = anio;
+
+        if (anio === anioActual) {
+            option.selected = true;
+        }
+
+        select.appendChild(option);
+    }
+}
+
+// Llamada para generar los años al cargar la página
+document.addEventListener("DOMContentLoaded", function () {
+    cargarAnios("anio_select");
+});

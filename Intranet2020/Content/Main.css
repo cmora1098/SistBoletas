@@ -35,7 +35,7 @@
 
 
 .hk-wrapper .hk-navbar.navbar-dark {
-    background: #005b51;
+    background: #00aa93;
 }
 
 .navbar-dark .navbar-nav .nav-link {
@@ -127,9 +127,11 @@ body #cometchat {
     min-width: 100px;
 }
 
+
+/* 
 #datable_1_filter {
     max-width: 350px;
-}
+} */
 
 #datable_1_filter label {
     display: flex;
@@ -140,3 +142,4 @@ body #cometchat {
 #datable_1_filter .form-control {
    margin-left: 20px;
 }
+

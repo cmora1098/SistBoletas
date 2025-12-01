@@ -47,7 +47,8 @@ $(document).ready(function () {
                         vCodArea: aData.cod_area
                     };
                     localStorage.setItem("usuario", JSON.stringify(ObjetoLogin));
-                    location.href = globals.urlMvc + 'home/index/?tk=';
+                    // location.href = globals.urlMvc + 'home/index/?tk='; // Cambio cmora
+                    location.href = globals.urlMvc + 'Boletas'; 
 
                     //$.ajax({
                     //    type: "POST",
