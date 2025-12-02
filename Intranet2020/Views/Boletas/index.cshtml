@@ -4,27 +4,33 @@
 
 @section scripts {
 
-    <!-- Plugins JavaScript -->
+    <!-- jQuery (si no está ya cargado en _Layout) -->
+    @* <script src="~/Content/vendors/jquery/jquery.min.js"></script> *@
+
+    <!-- DataTables Core -->
     <script src="~/Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="~/Content/vendors/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-    <script src="~/Content/vendors/datatables.net-dt/js/dataTables.dataTables.min.js"></script>
+
+    <!-- DataTables Buttons -->
     <script src="~/Content/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
     <script src="~/Content/vendors/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
     <script src="~/Content/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
     <script src="~/Content/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
     <script src="~/Content/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+
+    <!-- DataTables Responsive -->
     <script src="~/Content/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+
+    <!-- Toast -->
     <script src="~/Content/vendors/jquery-toast-plugin/dist/jquery.toast.min.js"></script>
 
     <!-- Parsley JS -->
     @Scripts.Render("~/Scripts/Vendor/ParsleyJS/parsley.min.js")
     @Scripts.Render("~/Scripts/Vendor/ParsleyJS/i18n/es.js")
 
-    <!-- Custom js -->
-    <script type="text/javascript" src="~/Scripts/Boletas/Boleta.js?noCache=@Guid.NewGuid().ToString()"></script>
-
+    <!-- Custom JS (con noCache para evitar cache del navegador) -->
+    <script src="~/Scripts/Boletas/Boleta.js?noCache=@Guid.NewGuid().ToString()"></script>
 }
-
 
 <div class="container-fluid">
 
@@ -32,103 +38,82 @@
     <div class="hk-pg-header">
         <h4 class="hk-pg-title">
             <span class="pg-title-icon">
-                <span class="feather-icon">
-                    <i data-feather="book"></i>
-                </span>
-            </span>Boletas
+                <span class="feather-icon"><i data-feather="book"></i></span>
+            </span>
+            Boletas
         </h4>
     </div>
-    <!-- /Title -->
 
     <!-- Row -->
     <div class="row">
         <div class="col-xl-12">
             <section class="hk-sec-wrapper">
                 <h5 class="hk-sec-title mb-20">Filtros de Búsqueda</h5>
+
                 <div class="row">
                     <div class="col-sm">
                         <div class="table-wrap">
 
+                            <!-- Contenedor admin oculto -->
                             <div id="container_admin" style="display:none;">
+
+                                <!-- Filtros fila 1 -->
                                 <div class="row mb-3">
                                     <div class="col-md-3">
-                                        <strong>
-                                            <label for="vTipoBoleta">Tipos de Boleta</label>
-                                        </strong>
+                                        <label><strong>Tipos de Boleta</strong></label>
                                         <select id="vTipoBoleta" class="form-control custom-select js-select">
-                                            @*<option disabled="disabled">Tipos de Boleta</option>*@
                                             <option value="R">R</option>
                                             <option value="G">G</option>
                                             <option value="" selected>Todos</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-3">
-                                        <strong>
-                                            <label for="bVisto">Vieron la boleta</label>
-                                        </strong>
 
+                                    <div class="col-md-3">
+                                        <label><strong>Vieron la boleta</strong></label>
                                         <select id="bVisto" class="form-control custom-select js-select">
-                                            @*<option disabled="disabled">Vieron la boleta</option>*@
-                                            <option value="1">Si</option>
+                                            <option value="1">Sí</option>
                                             <option value="0">No</option>
                                             <option value="" selected>Todos</option>
                                         </select>
                                     </div>
 
                                     <div class="col-md-3">
-                                        <strong>
-                                            <label for="bVistoCorreo">Visto en el correo</label>
-                                        </strong>
-
+                                        <label><strong>Visto en el correo</strong></label>
                                         <select id="bVistoCorreo" class="form-control custom-select js-select">
-                                            @*<option disabled="disabled">Visto en el correo</option>*@
-                                            <option value="1">Si</option>
+                                            <option value="1">Sí</option>
                                             <option value="0">No</option>
                                             <option value="" selected>Todos</option>
                                         </select>
                                     </div>
+
                                     <div class="col-md-3">
-                                        <strong>
-                                            <label for="bDescargado">Descargaron la boleta</label>
-                                        </strong>
-
+                                        <label><strong>Descargaron la boleta</strong></label>
                                         <select id="bDescargado" class="form-control custom-select js-select">
-                                            @*<option disabled="disabled">Descargaron la boleta</option>*@
-                                            <option value="1">Si</option>
+                                            <option value="1">Sí</option>
                                             <option value="0">No</option>
                                             <option value="" selected>Todos</option>
                                         </select>
                                     </div>
-
-
                                 </div>
 
+                                <!-- Filtros fila 2 -->
                                 <div class="row mb-3">
                                     <div class="col-md-3">
-                                        <strong>
-                                            <label for="bCorreoEnviado">Enviados al Correo Electronico</label>
-                                        </strong>
-
+                                        <label><strong>Enviados al correo</strong></label>
                                         <select id="bCorreoEnviado" class="form-control custom-select js-select">
-                                            @*<option disabled="disabled">Enviados al Correo Electronico</option>*@
-                                            <option value="1">Si</option>
+                                            <option value="1">Sí</option>
                                             <option value="0">No</option>
                                             <option value="" selected>Todos</option>
                                         </select>
                                     </div>
 
                                     <div class="col-md-3">
-                                        <strong>
-                                            <label for="anio_select">Año</label>
-                                        </strong>
+                                        <label><strong>Año</strong></label>
                                         <select id="anio_select" class="form-control custom-select"></select>
-
                                     </div>
 
                                     <div class="col-md-3">
-                                        <strong>
-                                            <label for="mes_select">Mes</label>
-                                        </strong>
+                                        <label><strong>Mes</strong></label>
                                         <select id="mes_select" class="form-control custom-select js-select">
                                             <option value="">Ver todos</option>
                                             <option value="01">Enero</option>
@@ -145,10 +130,9 @@
                                             <option value="12">Diciembre</option>
                                         </select>
                                     </div>
+
                                     <div class="col-md-3">
-                                        <strong>
-                                            <label for="vTipoTrabajador">Régimen</label>
-                                        </strong>
+                                        <label><strong>Régimen</strong></label>
                                         <select id="vTipoTrabajador" class="form-control custom-select js-select">
                                             <option value="">Todos</option>
                                             <option value="AGRO RURAL - CAS">AGRO RURAL - CAS</option>
@@ -165,52 +149,50 @@
                                     </div>
                                 </div>
 
+                                <!-- Botón enviar correos -->
                                 <div class="row mb-3">
-                                    <div class="col-md-12 d-flex justify-content-end align-items-end">
-
+                                    <div class="col-md-12 d-flex justify-content-end">
                                         <button id="send-masive-mails"
                                             class="btn btn-success btn-wth-icon btn-rounded icon-right">
-                                            <span class="btn-text">Enviar Correos</span> <span class="icon-label"><span
-                                                    class="feather-icon"><i
-                                                        data-feather="arrow-right-circle"></i></span> </span>
+                                            <span class="btn-text">Enviar Correos</span>
+                                            <span class="icon-label">
+                                                <span class="feather-icon">
+                                                    <i data-feather="arrow-right-circle"></i>
+                                                </span>
+                                            </span>
                                         </button>
-                                        <div class="wrap-masive-mails">
-                                        </div>
                                     </div>
                                 </div>
                             </div>
 
                             <hr />
 
+                            <!-- Tabla -->
                             <table id="datable_1" class="table table-boleta w-100 display pb-30"></table>
+
+                            <!-- Link descarga PDF invisible -->
                             <a id="dwnlink" download="boleta.pdf" style="display:none;"></a>
 
-                            <!-- Modal BOLETA DE PAGOS / VACACIONES -->
-                            <div class="modal fade" id="modalPdfModal" tabindex="-1" role="dialog"
-                                aria-labelledby="modalPdfModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+                            <!-- Modal PDF -->
+                            <div class="modal fade" id="modalPdfModal" tabindex="-1">
+                                <div class="modal-dialog modal-xl modal-dialog-centered">
                                     <div class="modal-content shadow-lg">
+
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="modalPdfModalLabel">BOLETA DE PAGOS /  VACACIONES</h5>
-                                            <button type="button" class="close text-white" data-dismiss="modal"
-                                                aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
+                                            <h5 class="modal-title">BOLETA DE PAGOS / VACACIONES</h5>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         </div>
 
-                                        <div class="modal-body p-0" style="height: 80vh; overflow: hidden;">
-                                            <!-- Contenedor con scroll interno -->
-                                            <div style="height: 100%; overflow-y: auto; background: #f8f9fa;">
-                                                <!-- Aquí se insertará el PDF -->
+                                        <div class="modal-body p-0" style="height:80vh; overflow:hidden;">
+                                            <div style="height:100%; overflow-y:auto; background:#f8f9fa;">
                                                 <div id="pdfViewerContainer" class="p-3 text-center text-muted">
-                                                    <span>Cargando PDF...</span>
+                                                    Cargando PDF...
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary"
-                                                data-dismiss="modal">CERRAR</button>
+                                            <button class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                                         </div>
 
                                     </div>
@@ -224,7 +206,8 @@
 
         </div>
     </div>
-    <!-- /Row -->
+
+    <!-- Estilo modal glass -->
     <style>
         .modal-glass .modal-content {
             backdrop-filter: blur(12px);
@@ -234,29 +217,26 @@
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
         }
 
-        .modal-glass .modal-header {
-            border-bottom: none;
-        }
-
+        .modal-glass .modal-header,
         .modal-glass .modal-footer {
-            border-top: none;
+            border: none;
         }
     </style>
 
-    <div class="modal fade modal-glass" id="modalAnular" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
+    <!-- Modal Anular -->
+    <div class="modal fade modal-glass" id="modalAnular" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" >
 
-                <div class="modal-header">
-                    <h5 class="modal-title font-weight-bold text-danger">
+                <div class="modal-header" style="background: #f5f7fa;">
+                    <h5 class="modal-title text-danger font-weight-bold" >
                         <i class="fa fa-ban mr-1"></i> Anular Boleta
                     </h5>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span>&times;</span>
-                    </button>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
                 <div class="modal-body">
+
                     <table class="table table-sm mb-3">
                         <tbody>
                             <tr>
@@ -286,7 +266,7 @@
                         style="border-radius:12px; background:rgba(255,255,255,0.8);"></textarea>
                 </div>
 
-                <div class="modal-footer">
+                <div class="modal-footer" style="background: #f5f7fa;">
                     <button class="btn btn-outline-dark" data-dismiss="modal">Cancelar</button>
                     <button id="btnAnular" class="btn btn-danger">
                         <i class="fa fa-trash-alt"></i> Anular
@@ -297,5 +277,239 @@
         </div>
     </div>
 
-
 </div>
+
+<style>
+/* =========================================================
+   RESET Y BASE
+========================================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", "Segoe UI", Arial, sans-serif;
+}
+
+body {
+    background: #f5f7fa;
+    color: #333;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+/* Scroll suave */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Estilo general de títulos */
+h1, h2, h3, h4 {
+    font-weight: 600;
+    color: #222;
+}
+
+/* =========================================================
+   CONTENEDORES Y TARJETAS
+========================================================= */
+.container {
+    width: 95%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.card {
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07);
+    padding: 20px 25px;
+    margin-bottom: 25px;
+    transition: all .25s ease;
+}
+
+.card:hover {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.10);
+    transform: translateY(-2px);
+}
+
+/* =========================================================
+   TABLAS PROFESIONALES
+========================================================= */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.table thead {
+    background: #eef1f5;
+}
+
+.table th {
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    color: #444;
+    font-size: 14px;
+}
+
+.table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid    #eee;
+    font-size: 14px;
+}
+
+ 
+/* =========================================================
+   BOTONES CORP.
+========================================================= */
+.btn {
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: 0.25s ease;
+    font-size: 14px;
+}
+
+.btn-primary {
+    background: #0057d9;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #0045b0;
+}
+
+.btn-success {
+    background: #15a05c;
+    color: white;
+}
+
+.btn-success:hover {
+    background: #11894c;
+}
+
+.btn-danger {
+    background: #d9534f;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #c1423f;
+}
+
+.btn-outline {
+    background: none;
+    border: 2px solid #0057d9;
+    color: #0057d9;
+}
+
+.btn-outline:hover {
+    background: #0057d9;
+    color: white;
+}
+
+/* =========================================================
+   INPUTS Y FORMULARIOS PROFESIONALES
+========================================================= */
+input, select, textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: border .25s;
+    font-size: 14px;
+    background: #fafafa;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #0057d9;
+    background: #fff;
+}
+
+/* Labels */
+label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: block;
+}
+
+/* =========================================================
+   MODALES ELEGANTES
+========================================================= */
+.modal-content {
+    border-radius: 16px;
+    padding: 0;
+    border: none;
+    box-shadow: 0 8px 26px rgba(0, 0, 0, 0.12);
+}
+
+.modal-header {
+    background: #28292a;
+    padding: 18px 22px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+}
+
+.modal-title {
+    color: rgb(255, 255, 255);
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.modal-body {
+    padding: 20px 25px;
+}
+
+.modal-footer {
+    padding: 18px 25px;
+    background: #28292a;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+}
+
+/* Botón cerrar modal */
+.close {
+    color: #fff;
+    opacity: 0.9;
+}
+
+.close:hover {
+    opacity: 1;
+}
+
+/* =========================================================
+   ALERTAS PROFESIONALES
+========================================================= */
+.alert {
+    padding: 15px 18px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.alert-success {
+    background: #e6fbf0;
+    border-left: 5px solid #15a05c;
+}
+
+.alert-danger {
+    background: #fdecea;
+    border-left: 5px solid #d9534f;
+}
+
+.alert-warning {
+    background: #fff4e5;
+    border-left: 5px solid #f0ad4e;
+}
+
+.alert-info {
+    background: #e6f3ff;
+    border-left: 5px solid #0057d9;
+}
+ 
+</style>
