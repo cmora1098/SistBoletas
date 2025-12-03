@@ -4,9 +4,6 @@
 
 @section scripts {
 
-    <!-- jQuery (si no está ya cargado en _Layout) -->
-    @* <script src="~/Content/vendors/jquery/jquery.min.js"></script> *@
-
     <!-- DataTables Core -->
     <script src="~/Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="~/Content/vendors/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -24,11 +21,11 @@
     <!-- Toast -->
     <script src="~/Content/vendors/jquery-toast-plugin/dist/jquery.toast.min.js"></script>
 
-    <!-- Parsley JS -->
-    @Scripts.Render("~/Scripts/Vendor/ParsleyJS/parsley.min.js")
-    @Scripts.Render("~/Scripts/Vendor/ParsleyJS/i18n/es.js")
+    <!-- Parsley SOLO la versión local -->
+    <script src="~/Scripts/Vendor/ParsleyJS/parsley.min.js"></script>
+    <script src="~/Scripts/Vendor/ParsleyJS/i18n/es.js"></script>
 
-    <!-- Custom JS (con noCache para evitar cache del navegador) -->
+    <!-- Custom JS (AL FINAL SIEMPRE) -->
     <script src="~/Scripts/Boletas/Boleta.js?noCache=@Guid.NewGuid().ToString()"></script>
 }
 
@@ -226,52 +223,61 @@
     <!-- Modal Anular -->
     <div class="modal fade modal-glass" id="modalAnular" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" >
+            <div class="modal-content">
 
                 <div class="modal-header" style="background: #f5f7fa;">
-                    <h5 class="modal-title text-danger font-weight-bold" >
+                    <h5 class="modal-title text-danger font-weight-bold">
                         <i class="fa fa-ban mr-1"></i> Anular Boleta
                     </h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
-                <div class="modal-body">
+                <!-- AQUI VA EL FORMULARIO -->
+                <form id="formAnular" data-parsley-validate>
 
-                    <table class="table table-sm mb-3">
-                        <tbody>
-                            <tr>
-                                <th>Nombres:</th>
-                                <td><strong class="js-anular-nombres"></strong></td>
-                            </tr>
-                            <tr>
-                                <th>DNI:</th>
-                                <td><strong class="js-anular-dni"></strong></td>
-                            </tr>
-                            <tr>
-                                <th>Año:</th>
-                                <td><strong class="js-anular-anio"></strong></td>
-                            </tr>
-                            <tr>
-                                <th>Mes:</th>
-                                <td><strong class="js-anular-mes"></strong></td>
-                            </tr>
-                            <tr>
-                                <th>Tipo:</th>
-                                <td><strong class="js-anular-tipo"></strong></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="modal-body">
 
-                    <textarea id="vMotivo" class="form-control" rows="4" placeholder="Ingrese el motivo..."
-                        style="border-radius:12px; background:rgba(255,255,255,0.8);"></textarea>
-                </div>
+                        <table class="table table-sm mb-3">
+                            <tbody>
+                                <tr>
+                                    <th>Nombres:</th>
+                                    <td><strong class="js-anular-nombres"></strong></td>
+                                </tr>
+                                <tr>
+                                    <th>DNI:</th>
+                                    <td><strong class="js-anular-dni"></strong></td>
+                                </tr>
+                                <tr>
+                                    <th>Año:</th>
+                                    <td><strong class="js-anular-anio"></strong></td>
+                                </tr>
+                                <tr>
+                                    <th>Mes:</th>
+                                    <td><strong class="js-anular-mes"></strong></td>
+                                </tr>
+                                <tr>
+                                    <th>Tipo:</th>
+                                    <td><strong class="js-anular-tipo"></strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-                <div class="modal-footer" style="background: #f5f7fa;">
-                    <button class="btn btn-outline-dark" data-dismiss="modal">Cancelar</button>
-                    <button id="btnAnular" class="btn btn-danger">
-                        <i class="fa fa-trash-alt"></i> Anular
-                    </button>
-                </div>
+                        <!-- CAMPO CON VALIDACIÓN -->
+                        <textarea id="vMotivo" class="form-control" rows="4" placeholder="Ingrese el motivo..." required
+                            data-parsley-required="true" data-parsley-minlength="5"
+                            style="border-radius:12px; background:rgba(255,255,255,0.8);"></textarea>
+
+                    </div>
+
+                    <div class="modal-footer" style="background: #f5f7fa;">
+                        <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Cancelar</button>
+                        <button id="btnAnular" type="submit" class="btn btn-danger">
+                            <i class="fa fa-trash-alt"></i> Anular
+                        </button>
+                    </div>
+
+                </form>
+                <!-- FIN FORM -->
 
             </div>
         </div>
@@ -280,236 +286,242 @@
 </div>
 
 <style>
-/* =========================================================
+    /* =========================================================
    RESET Y BASE
 ========================================================= */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Inter", "Segoe UI", Arial, sans-serif;
-}
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", "Segoe UI", Arial, sans-serif;
+    }
 
-body {
-    background: #f5f7fa;
-    color: #333;
-    font-size: 15px;
-    line-height: 1.5;
-}
+    body {
+        background: #f5f7fa;
+        color: #333;
+        font-size: 15px;
+        line-height: 1.5;
+    }
 
-/* Scroll suave */
-html {
-    scroll-behavior: smooth;
-}
+    /* Scroll suave */
+    html {
+        scroll-behavior: smooth;
+    }
 
-/* Estilo general de títulos */
-h1, h2, h3, h4 {
-    font-weight: 600;
-    color: #222;
-}
+    /* Estilo general de títulos */
+    h1,
+    h2,
+    h3,
+    h4 {
+        font-weight: 600;
+        color: #222;
+    }
 
-/* =========================================================
+    /* =========================================================
    CONTENEDORES Y TARJETAS
 ========================================================= */
-.container {
-    width: 95%;
-    max-width: 1200px;
-    margin: auto;
-}
+    .container {
+        width: 95%;
+        max-width: 1200px;
+        margin: auto;
+    }
 
-.card {
-    background: #ffffff;
-    border-radius: 14px;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07);
-    padding: 20px 25px;
-    margin-bottom: 25px;
-    transition: all .25s ease;
-}
+    .card {
+        background: #ffffff;
+        border-radius: 14px;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07);
+        padding: 20px 25px;
+        margin-bottom: 25px;
+        transition: all .25s ease;
+    }
 
-.card:hover {
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.10);
-    transform: translateY(-2px);
-}
+    .card:hover {
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.10);
+        transform: translateY(-2px);
+    }
 
-/* =========================================================
+    /* =========================================================
    TABLAS PROFESIONALES
 ========================================================= */
-.table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #ffffff;
-    border-radius: 12px;
-    overflow: hidden;
-}
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #ffffff;
+        border-radius: 12px;
+        overflow: hidden;
+    }
 
-.table thead {
-    background: #eef1f5;
-}
+    .table thead {
+        background: #eef1f5;
+    }
 
-.table th {
-    padding: 12px 15px;
-    text-align: left;
-    font-weight: 600;
-    color: #444;
-    font-size: 14px;
-}
+    .table th {
+        padding: 12px 15px;
+        text-align: left;
+        font-weight: 600;
+        color: #444;
+        font-size: 14px;
+    }
 
-.table td {
-    padding: 12px 15px;
-    border-bottom: 1px solid    #eee;
-    font-size: 14px;
-}
+    .table td {
+        padding: 12px 15px;
+        border-bottom: 1px solid #eee;
+        font-size: 14px;
+    }
 
- 
-/* =========================================================
+
+    /* =========================================================
    BOTONES CORP.
 ========================================================= */
-.btn {
-    padding: 10px 18px;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-    font-weight: 500;
-    transition: 0.25s ease;
-    font-size: 14px;
-}
+    .btn {
+        padding: 10px 18px;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        font-weight: 500;
+        transition: 0.25s ease;
+        font-size: 14px;
+    }
 
-.btn-primary {
-    background: #0057d9;
-    color: white;
-}
+    .btn-primary {
+        background: #0057d9;
+        color: white;
+    }
 
-.btn-primary:hover {
-    background: #0045b0;
-}
+    .btn-primary:hover {
+        background: #0045b0;
+    }
 
-.btn-success {
-    background: #15a05c;
-    color: white;
-}
+    .btn-success {
+        background: #15a05c;
+        color: white;
+    }
 
-.btn-success:hover {
-    background: #11894c;
-}
+    .btn-success:hover {
+        background: #11894c;
+    }
 
-.btn-danger {
-    background: #d9534f;
-    color: white;
-}
+    .btn-danger {
+        background: #d9534f;
+        color: white;
+    }
 
-.btn-danger:hover {
-    background: #c1423f;
-}
+    .btn-danger:hover {
+        background: #c1423f;
+    }
 
-.btn-outline {
-    background: none;
-    border: 2px solid #0057d9;
-    color: #0057d9;
-}
+    .btn-outline {
+        background: none;
+        border: 2px solid #0057d9;
+        color: #0057d9;
+    }
 
-.btn-outline:hover {
-    background: #0057d9;
-    color: white;
-}
+    .btn-outline:hover {
+        background: #0057d9;
+        color: white;
+    }
 
-/* =========================================================
+    /* =========================================================
    INPUTS Y FORMULARIOS PROFESIONALES
 ========================================================= */
-input, select, textarea {
-    width: 100%;
-    padding: 10px 14px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    outline: none;
-    transition: border .25s;
-    font-size: 14px;
-    background: #fafafa;
-}
+    input,
+    select,
+    textarea {
+        width: 100%;
+        padding: 10px 14px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        outline: none;
+        transition: border .25s;
+        font-size: 14px;
+        background: #fafafa;
+    }
 
-input:focus, select:focus, textarea:focus {
-    border-color: #0057d9;
-    background: #fff;
-}
+    input:focus,
+    select:focus,
+    textarea:focus {
+        border-color: #0057d9;
+        background: #fff;
+    }
 
-/* Labels */
-label {
-    font-weight: 600;
-    margin-bottom: 6px;
-    display: block;
-}
+    /* Labels */
+    label {
+        font-weight: 600;
+        margin-bottom: 6px;
+        display: block;
+    }
 
-/* =========================================================
+    /* =========================================================
    MODALES ELEGANTES
 ========================================================= */
-.modal-content {
-    border-radius: 16px;
-    padding: 0;
-    border: none;
-    box-shadow: 0 8px 26px rgba(0, 0, 0, 0.12);
-}
+    .modal-content {
+        border-radius: 16px;
+        padding: 0;
+        border: none;
+        box-shadow: 0 8px 26px rgba(0, 0, 0, 0.12);
+    }
 
-.modal-header {
-    background: #28292a;
-    padding: 18px 22px;
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
-}
+    .modal-header {
+        background: #28292a;
+        padding: 18px 22px;
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+    }
 
-.modal-title {
-    color: rgb(255, 255, 255);
-    font-size: 18px;
-    font-weight: 600;
-}
+    .modal-title {
+        color: rgb(255, 255, 255);
+        font-size: 18px;
+        font-weight: 600;
+    }
 
-.modal-body {
-    padding: 20px 25px;
-}
+    .modal-body {
+        padding: 20px 25px;
+    }
 
-.modal-footer {
-    padding: 18px 25px;
-    background: #28292a;
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
-}
+    .modal-footer {
+        padding: 18px 25px;
+        background: #28292a;
+        border-bottom-left-radius: 16px;
+        border-bottom-right-radius: 16px;
+    }
 
-/* Botón cerrar modal */
-.close {
-    color: #fff;
-    opacity: 0.9;
-}
+    /* Botón cerrar modal */
+    .close {
+        color: #fff;
+        opacity: 0.9;
+    }
 
-.close:hover {
-    opacity: 1;
-}
+    .close:hover {
+        opacity: 1;
+    }
 
-/* =========================================================
+    /* =========================================================
    ALERTAS PROFESIONALES
 ========================================================= */
-.alert {
-    padding: 15px 18px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    font-size: 14px;
-}
+    .alert {
+        padding: 15px 18px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
 
-.alert-success {
-    background: #e6fbf0;
-    border-left: 5px solid #15a05c;
-}
+    .alert-success {
+        background: #e6fbf0;
+        border-left: 5px solid #15a05c;
+    }
 
-.alert-danger {
-    background: #fdecea;
-    border-left: 5px solid #d9534f;
-}
+    .alert-danger {
+        background: #fdecea;
+        border-left: 5px solid #d9534f;
+    }
 
-.alert-warning {
-    background: #fff4e5;
-    border-left: 5px solid #f0ad4e;
-}
+    .alert-warning {
+        background: #fff4e5;
+        border-left: 5px solid #f0ad4e;
+    }
 
-.alert-info {
-    background: #e6f3ff;
-    border-left: 5px solid #0057d9;
-}
- 
+    .alert-info {
+        background: #e6f3ff;
+        border-left: 5px solid #0057d9;
+    }
 </style>

@@ -922,8 +922,11 @@ function accionesBoleta() {
     objeto.vMes = $this.data("mes");
     objeto.vTipoBoleta = $this.data("tipo");
     objeto.vNombres = $this.data("nombres");
-    objeto.vApepat = $this.data("apepat");
-    objeto.vApemat = $this.data("apemat");
+    // objeto.vApepat = $this.data("apepat");
+    // objeto.vApemat = $this.data("apemat");
+    objeto.vApePat = $this.data("apepat");
+objeto.vApeMat = $this.data("apemat");
+
     objeto.vCorreo = $this.data("mail");
     objeto.iCodPerfil = globals.storage.iCodPerfil;
 
