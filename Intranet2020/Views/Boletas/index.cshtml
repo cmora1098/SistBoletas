@@ -21,9 +21,9 @@
     <!-- Toast -->
     <script src="~/Content/vendors/jquery-toast-plugin/dist/jquery.toast.min.js"></script>
 
-    <!-- Parsley SOLO la versión local -->
-    <script src="~/Scripts/Vendor/ParsleyJS/parsley.min.js"></script>
-    <script src="~/Scripts/Vendor/ParsleyJS/i18n/es.js"></script>
+    <!-- Parsley JS -->
+    @Scripts.Render("~/Scripts/Vendor/ParsleyJS/parsley.min.js")
+    @Scripts.Render("~/Scripts/Vendor/ParsleyJS/i18n/es.js")
 
     <!-- Custom JS (AL FINAL SIEMPRE) -->
     <script src="~/Scripts/Boletas/Boleta.js?noCache=@Guid.NewGuid().ToString()"></script>
