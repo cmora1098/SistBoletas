@@ -925,7 +925,7 @@ function accionesBoleta() {
     // objeto.vApepat = $this.data("apepat");
     // objeto.vApemat = $this.data("apemat");
     objeto.vApePat = $this.data("apepat");
-objeto.vApeMat = $this.data("apemat");
+    objeto.vApeMat = $this.data("apemat");
 
     objeto.vCorreo = $this.data("mail");
     objeto.iCodPerfil = globals.storage.iCodPerfil;
@@ -951,15 +951,19 @@ objeto.vApeMat = $this.data("apemat");
         .done(function (aData) {
           //console.log(aData.vMensaje);
 
-        if (aData.vMensaje == "Mail enviado") {
-            $this.find(".btn-icon-wrap").html('<i class="fa fa-envelope-o" aria-hidden="true"></i>');
+          if (aData.vMensaje == "Mail enviado") {
+            $this
+              .find(".btn-icon-wrap")
+              .html('<i class="fa fa-envelope-o" aria-hidden="true"></i>');
             msgSuccess();
           }
         })
         .fail(function (xhr, status, error) {
           console.log(xhr, status, error);
           console.log(error);
-          $this.find(".btn-icon-wrap").html('<i class="fa fa-envelope-o" aria-hidden="true"></i>');
+          $this
+            .find(".btn-icon-wrap")
+            .html('<i class="fa fa-envelope-o" aria-hidden="true"></i>');
           msgAlert();
         });
     } else {
@@ -1079,83 +1083,205 @@ function checkAll() {
   });
 }
 
-var counter;
+// var counter;
+
+// function sendMasiveMail() {
+//   $("#send-masive-mails").on("click", function () {
+//     let $box = $("#customCheck1");
+//     $boxes = $("#datable_1").find(".js-sr-checkbox:checked");
+
+//     var arrayboxes = [];
+
+//     for (var i = 0; i < $boxes.length; i++) {
+//       let ip = $boxes.eq(i),
+//         ml = ip.data("mail");
+//       //console.log(ip);
+//       //console.log(ml);
+
+//       if (ml.length > 0) {
+//         arrayboxes.push($boxes.eq(i));
+//       }
+//     }
+
+//     $(".wrap-masive-mails").append(
+//       "Enviando " +
+//         $boxes.length +
+//         ' correos, esto puede tardar unos minutos. <i class= "fa fa-refresh fa-spin fa-1x fa-fw" ></i> <span class="sr-only"> Loading...</span>'
+//     );
+//     $("#send-masive-mails").hide();
+
+//     counter = 0;
+//     recursively_ajax(arrayboxes);
+//   });
+// }
+
+// function recursively_ajax(arrayObjects) {
+//   var element = arrayObjects[counter],
+//     objects = arrayObjects;
+
+//   let obj = {};
+//   obj.vDni = $(element).eq(0).data("dni");
+//   obj.vAnio = $(element).eq(0).data("anio");
+//   obj.vMes = $(element).eq(0).data("mes");
+//   obj.vTipoBoleta = $(element).eq(0).data("tipo");
+//   obj.vNombres = $(element).eq(0).data("nombres");
+//   obj.vApepat = $(element).eq(0).data("apepat");
+//   obj.vApemat = $(element).eq(0).data("apemat");
+//   obj.vCorreo = $(element).eq(0).data("mail");
+//   obj.iCodPerfil = globals.storage.iCodPerfil;
+
+//   $.ajax({
+//     type: "POST",
+//     async: false, // set async false to wait for previous response
+//     url: globals.urlWebApi + "/api/Boleta/EnviarCorreo",
+//     dataType: "json",
+//     data: obj,
+//     beforeSend: function (xhr) {
+//       xhr.setRequestHeader("Authorization", "Bearer " + globals.storage.Token);
+//     },
+//     success: function (data) {
+//       if (data.vMensaje == "Mail enviado") {
+//       }
+
+//       counter++;
+
+//       if (counter < objects.length) {
+//         setTimeout(recursively_ajax(objects), 3000);
+//         $(".wrap-masive-mails").html("");
+//         $("#send-masive-mails").show();
+//         var a = objects.length;
+//         msgSuccess2(a);
+//         updateTable();
+//       }
+//     },
+//     fail: function (xhr, status, error) {
+//       console.log(xhr, status, error);
+//       console.log(error);
+//       msgAlert();
+//     },
+//   });
+// }
+
+var counter = 0;
+var blockIndex = 0;
+var blockSize = 45;
+var blocks = [];
 
 function sendMasiveMail() {
-  $("#send-masive-mails").on("click", function () {
-    let $box = $("#customCheck1");
-    $boxes = $("#datable_1").find(".js-sr-checkbox:checked");
+    $("#send-masive-mails").on("click", function () {
 
-    var arrayboxes = [];
+        let $boxes = $("#datable_1").find(".js-sr-checkbox:checked");
+        var arrayboxes = [];
 
-    for (var i = 0; i < $boxes.length; i++) {
-      let ip = $boxes.eq(i),
-        ml = ip.data("mail");
-      //console.log(ip);
-      //console.log(ml);
+        for (var i = 0; i < $boxes.length; i++) {
+            let ml = $boxes.eq(i).data("mail");
+            if (ml && ml.length > 0) {
+                arrayboxes.push($boxes.eq(i));
+            }
+        }
 
-      if (ml.length > 0) {
-        arrayboxes.push($boxes.eq(i));
-      }
-    }
+        if (arrayboxes.length === 0) {
+            msgAlert("No hay correos válidos.");
+            return;
+        }
 
-    $(".wrap-masive-mails").append(
-      "Enviando " +
-        $boxes.length +
-        ' correos, esto puede tardar unos minutos. <i class= "fa fa-refresh fa-spin fa-1x fa-fw" ></i> <span class="sr-only"> Loading...</span>'
-    );
-    $("#send-masive-mails").hide();
+        // Crear bloques automáticos
+        blocks = [];
+        for (let i = 0; i < arrayboxes.length; i += blockSize) {
+            blocks.push(arrayboxes.slice(i, i + blockSize));
+        }
 
+        counter = 0;
+        blockIndex = 0;
+
+        $("#modalProgressEmails").modal("show");
+
+        processBlock();
+    });
+}
+
+function processBlock() {
+
+    let currentBlock = blocks[blockIndex];
     counter = 0;
-    recursively_ajax(arrayboxes);
-  });
+
+    updateBlockInfo();
+
+    recursively_ajax(currentBlock);
 }
 
 function recursively_ajax(arrayObjects) {
-  var element = arrayObjects[counter], objects = arrayObjects;
 
-  let obj = {};
-  obj.vDni = $(element).eq(0).data("dni");
-  obj.vAnio = $(element).eq(0).data("anio");
-  obj.vMes = $(element).eq(0).data("mes");
-  obj.vTipoBoleta = $(element).eq(0).data("tipo");
-  obj.vNombres = $(element).eq(0).data("nombres");
-  obj.vApepat = $(element).eq(0).data("apepat");
-  obj.vApemat = $(element).eq(0).data("apemat");
-  obj.vCorreo = $(element).eq(0).data("mail");
-  obj.iCodPerfil = globals.storage.iCodPerfil;
+    var element = arrayObjects[counter];
 
-  $.ajax({
-    type: "POST",
-    async: false, // set async false to wait for previous response
-    url: globals.urlWebApi + "/api/Boleta/EnviarCorreo",
-    dataType: "json",
-    data: obj,
-    beforeSend: function (xhr) {
-      xhr.setRequestHeader("Authorization", "Bearer " + globals.storage.Token);
-    },
-    success: function (data) {
-      if (data.vMensaje == "Mail enviado") {
-      }
+    let obj = {
+        vDni: $(element).data("dni"),
+        vAnio: $(element).data("anio"),
+        vMes: $(element).data("mes"),
+        vTipoBoleta: $(element).data("tipo"),
+        vNombres: $(element).data("nombres"),
+        vApepat: $(element).data("apepat"),
+        vApemat: $(element).data("apemat"),
+        vCorreo: $(element).data("mail"),
+        iCodPerfil: globals.storage.iCodPerfil
+    };
 
-      counter++;
+    $.ajax({
+        type: "POST",
+        async: false,
+        url: globals.urlWebApi + "/api/Boleta/EnviarCorreo",
+        dataType: "json",
+        data: obj,
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader("Authorization", "Bearer " + globals.storage.Token);
+        },
+        success: function () {
 
-      if (counter < objects.length) {
-        setTimeout(recursively_ajax(objects), 3000);
-        $(".wrap-masive-mails").html("");
-        $("#send-masive-mails").show();
-        var a = objects.length;
-        msgSuccess2(a);
-        updateTable();
-      }
-    },
-    fail: function (xhr, status, error) {
-      console.log(xhr, status, error);
-      console.log(error);
-      msgAlert();
-    },
-  });
+            counter++;
+
+            updateProgress(counter, arrayObjects.length);
+
+            if (counter < arrayObjects.length) {
+                setTimeout(() => recursively_ajax(arrayObjects), 800);
+            } else {
+                blockIndex++;
+
+                if (blockIndex < blocks.length) {
+                    setTimeout(() => processBlock(), 2000);
+                } else {
+                    $("#progress-email-text").text("✔ Envío completado.");
+                    $("#progress-bar-email").removeClass("progress-bar-animated");
+                    updateTable();
+                }
+            }
+        },
+        fail: function () {
+            msgAlert();
+        }
+    });
 }
+
+function updateBlockInfo() {
+    $("#progress-block-info").html(
+        `📦 Bloque <strong>${blockIndex + 1}</strong> de <strong>${blocks.length}</strong>`
+    );
+
+    $("#progress-email-text").text("Iniciando envío...");
+    updateProgress(0, blocks[blockIndex].length);
+}
+
+function updateProgress(current, total) {
+    let percent = Math.round((current / total) * 100);
+
+    $("#progress-bar-email")
+        .css("width", percent + "%")
+        .text(percent + "%");
+
+    $("#progress-email-text").text(
+        `Enviando correo ${current} de ${total}...`
+    );
+}
+
 
 // CMORA - Listado de Año
 function cargarAnios(selectId, anioInicio = 2020) {

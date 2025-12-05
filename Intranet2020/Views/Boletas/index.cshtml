@@ -235,6 +235,12 @@
                 <!-- AQUI VA EL FORMULARIO -->
                 <form id="formAnular" data-parsley-validate>
 
+                    <!-- CAMPOS OCULTOS NECESARIOS -->
+                    <input type="hidden" id="vDni_j">
+                    <input type="hidden" id="vAnio_j">
+                    <input type="hidden" id="vMes_j">
+                    <input type="hidden" id="vTipoBoleta_j">
+
                     <div class="modal-body">
 
                         <table class="table table-sm mb-3">
@@ -262,7 +268,6 @@
                             </tbody>
                         </table>
 
-                        <!-- CAMPO CON VALIDACIÓN -->
                         <textarea id="vMotivo" class="form-control" rows="4" placeholder="Ingrese el motivo..." required
                             data-parsley-required="true" data-parsley-minlength="5"
                             style="border-radius:12px; background:rgba(255,255,255,0.8);"></textarea>
@@ -277,11 +282,48 @@
                     </div>
 
                 </form>
+
                 <!-- FIN FORM -->
 
             </div>
         </div>
     </div>
+    
+    <!-- Modal Progreso de Correos -->
+    <div class="modal fade modal-glass" id="modalProgressEmails" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header" style="background: lightseagreen;">
+                    <h5 class="modal-title">
+                        <i class="fa fa-envelope mr-1"></i> Envío Masivo de Correos
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div id="progress-block-info" class="mb-3 font-weight-bold"></div>
+
+                    <div class="progress mb-2" style="height:22px;">
+                        <div id="progress-bar-email" class="progress-bar progress-bar-striped progress-bar-animated"
+                            role="progressbar" style="width: 0%">0%
+                        </div>
+                    </div>
+
+                    <p class="text-center mt-3" id="progress-email-text"></p>
+
+                </div>
+
+                <div class="modal-footer" style="background: lightseagreen;">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
 
 </div>
 
